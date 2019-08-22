@@ -12,10 +12,10 @@
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{{ asset('template/css/rtl/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('template/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- not use this in ltr -->
-    <link href="{{ asset('template/css/rtl/bootstrap.rtl.css')}}" rel="stylesheet">
+    <link href="{{ asset('template/css/bootstrap.rtl.css')}}" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="{{ asset('template/css/plugins/metisMenu/metisMenu.min.css')}}" rel="stylesheet">
@@ -24,7 +24,7 @@
     <link href="{{ asset('template/css/plugins/timeline.css')}}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="{{ asset('template/css/rtl/sb-admin-2.css')}}" rel="stylesheet">
+    <link href="{{ asset('template/css/sb-admin-2.css')}}" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
     <link href="{{ asset('template/css/plugins/morris.css')}}" rel="stylesheet">

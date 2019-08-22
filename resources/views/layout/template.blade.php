@@ -12,22 +12,22 @@
     <title>@yield('title','مصاريفي') - مصاريفي</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{{ asset('template/css/rtl/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
 
     <!-- not use this in ltr -->
-    <link href="{{ asset('template/css/rtl/bootstrap.rtl.css ') }}" rel="stylesheet">
+    <!--<link href="{{ asset('template/css/bootstrap.rtl.css ') }}" rel="stylesheet" type="text/css">-->
 
     <!-- MetisMenu CSS -->
-    <link href="{{ asset('template/css/plugins/metisMenu/metisMenu.min.css ') }}" rel="stylesheet">
+    <link href="{{ asset('template/css/plugins/metisMenu/metisMenu.min.css ') }}" rel="stylesheet" type="text/css">
 
     <!-- Timeline CSS -->
-    <link href="{{ asset('template/css/plugins/timeline.css ') }}" rel="stylesheet">
+    <link href="{{ asset('template/css/plugins/timeline.css ') }}" rel="stylesheet" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="{{ asset('template/css/rtl/sb-admin-2.css ') }}" rel="stylesheet">
+    <link href="{{ asset('template/css/sb-admin-2.css ') }}" rel="stylesheet" type="text/css">
 
     <!-- Morris Charts CSS -->
-    <link href="{{ asset('template/css/plugins/morris.css ') }}" rel="stylesheet">
+    <link href="{{ asset('template/css/plugins/morris.css ') }}" rel="stylesheet" type="text/css">
 
     <!-- Custom Fonts -->
     <link href="{{ asset('template/css/font-awesome/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
@@ -44,7 +44,6 @@
 <body>
 
 <div id="wrapper">
-
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">

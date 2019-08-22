@@ -29,7 +29,8 @@ class UserController extends Controller
      */
     public function create()
     {
-
+        $roles_company = CompanyRole::all();
+        return view('company.create_user', compact('roles_company'));
     }
 
     /**
@@ -40,7 +41,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+        $request['company_id'] = Auth::user()->company_id;
+        $request['role_id'] = 2;
+        $request['password'] = Hash::make($request['password']);
+        User::create($request->all());
+        return redirect('user');
     }
 
     /**
@@ -103,18 +108,34 @@ class UserController extends Controller
         return view('company.user', compact('vendors'));
     }
 
-    public function createUserFromAdminToCompany($id){
+    public function createUserFromAdminToCompany($id)
+    {
         $company = Company::find($id);
         $roles_company = CompanyRole::all();
-        return view('admin.create_user', compact( 'roles_company','company'));
+        return view('admin.create_user', compact('roles_company', 'company'));
     }
 
-    public function storeUserFromAdminToCompany(Request $request, $id){
+    public function storeUserFromAdminToCompany(Request $request, $id)
+    {
         $request['company_id'] = $id;
         $request['role_id'] = 2;
         $request['password'] = Hash::make($request['password']);
         User::create($request->all());
 
         return redirect('company');
+    }
+
+    public function createVendorFromCompanyAdmin()
+    {
+        return view('company.create_vendor');
+    }
+
+    public function storeVendorFromCompanyAdmin(Request $request)
+    {
+        $request['company_id'] = Auth::user()->company_id;
+        $request['role_id'] = 3;
+        $request['password'] = Hash::make($request['password']);
+        User::create($request->all());
+        return redirect('user');
     }
 }

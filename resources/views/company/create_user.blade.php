@@ -1,8 +1,8 @@
 @extends('layout.template')
 
-@section('title','صفحة الأدمن')
+@section('title','صفحة الشركة')
 
-@section('title_content','إضافة مستخدم للشركة')
+@section('title_content','إضافة مستخدم')
 @section('sidebar')
     <ul class="nav" id="side-menu">
         <li>
@@ -24,15 +24,13 @@
 @endsection
 @section('content')
     <div class="col-md-8">
-        <form class="form-signin" action="{{ route('user.storeUserFromAdminToCompany' , $company->id) }}" method="post">
+        <form class="form-signin" action="{{ route('user.store') }}" method="post">
             @csrf
-            {{ method_field('put') }}
-            <h1 class="h3 mb-3 font-weight-normal">الرجاء إدخال بيانات الشركة</h1>
-
+            <h1 class="h3 mb-3 font-weight-normal">الرجاء إدخال بيانات المستخدم</h1>
             <input type="text" class="form-control" name="name" placeholder="@lang('auth.name')" required autofocus>
             <input type="email" class="form-control" name="email" placeholder="@lang('auth.email')" required>
             <select class="form-control" name="company_role_id" required>
-                <option value="-1">@lang('auth.choose')</option>
+                <option value="-1">اختر نوع الموظف</option>
                 @foreach($roles_company as $role)
                     <option value="{{ $role->id }}">
                         @if($role->type == 'admin')
@@ -51,4 +49,3 @@
         </form>
     </div>
 @endsection
-

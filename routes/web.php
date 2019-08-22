@@ -20,6 +20,8 @@ Auth::routes();
 Route::resource('company', 'CompanyController')->middleware('isAdmin');
 Route::get('user/{id}/createUserFromAdminToCompany', 'UserController@createUserFromAdminToCompany')->name('user.createUserFromAdminToCompany')->middleware('isAdmin');
 Route::put('user/{id}/storeUserFromAdminToCompany', 'UserController@storeUserFromAdminToCompany')->name('user.storeUserFromAdminToCompany')->middleware('isAdmin');
+Route::get('user/createVendorFromCompanyAdmin', 'UserController@createVendorFromCompanyAdmin')->name('user.createVendorFromCompanyAdmin')->middleware('isEmployeeAdmin');
+Route::post('user/storeVendorFromCompanyAdmin', 'UserController@storeVendorFromCompanyAdmin')->name('user.storeVendorFromCompanyAdmin')->middleware('isEmployeeAdmin');
 Route::resource('user', 'UserController')->middleware('isEmployeeAdmin');
 
 Route::get('employees', 'UserController@employees')->name('user.employees');
