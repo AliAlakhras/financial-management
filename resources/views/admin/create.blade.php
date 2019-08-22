@@ -2,7 +2,7 @@
 
 @section('title','صفحة الأدمن')
 
-@section('title_content','الشركات')
+@section('title_content','إضافة شركة')
 @section('sidebar')
     <ul class="nav" id="side-menu">
         <li>

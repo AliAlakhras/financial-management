@@ -1,10 +1,8 @@
 @extends('layout.template')
 
-@section('title','admin page')
-
 @section('title','صفحة الأدمن')
 
-@section('title_content','الشركات')
+@section('title_content','إضافة مستخدم للشركة')
 @section('sidebar')
     <ul class="nav" id="side-menu">
         <li>
