@@ -25,6 +25,8 @@ class HomeController extends Controller
     {
         if (Auth::user()->role_id == 1){
             return redirect('company');
+        }elseif (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            return redirect('user');
         }
 
         return redirect('login');
