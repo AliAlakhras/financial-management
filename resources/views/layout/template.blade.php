@@ -40,14 +40,21 @@
         <div class="header py-4">
             <div class="container">
                 <div class="d-flex">
-                    <a class="header-brand" href="./index.html">
+                    <a class="header-brand" href="">
                         <img src="{{ asset('template/demo/brand/tabler.svg') }}" class="header-brand-img"
                              alt="tabler logo">
                     </a>
                     <div class="d-flex order-lg-2 ml-auto">
                         <div class="nav-item d-none d-md-flex">
-                            <a href="https://github.com/tabler/tabler" class="btn btn-sm btn-outline-primary"
-                               target="_blank">Source code</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </div>
                         <div class="dropdown d-none d-md-flex">
                             <a class="nav-link icon" data-toggle="dropdown">
@@ -178,8 +185,8 @@
                     <div class="row align-items-center">
                         <div class="col-auto">
                             <ul class="list-inline list-inline-dots mb-0">
-                                <li class="list-inline-item"><a href="./docs/index.html">Documentation</a></li>
-                                <li class="list-inline-item"><a href="./faq.html">FAQ</a></li>
+                                <li class="list-inline-item"><a href="">Documentation</a></li>
+                                <li class="list-inline-item"><a href="">FAQ</a></li>
                             </ul>
                         </div>
                         <div class="col-auto">

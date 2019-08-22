@@ -17,10 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::resource('company', 'CompanyController')->middleware('isAdmin');
+
 Route::get('employees', 'UserController@employees')->name('user.employees');
 Route::get('vendors', 'UserController@vendors')->name('user.vendors');
 
 Route::resource('user', 'UserController');
-Route::resource('company', 'CompanyController');
+
 
 Route::get('/home', 'HomeController@index')->name('home');
