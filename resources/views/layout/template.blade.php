@@ -1,207 +1,342 @@
-<!doctype html>
-<html lang="en" dir="ltr">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Language" content="en"/>
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="theme-color" content="#4188c9">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <link rel="icon" href="{{ asset('template/favicon.ico') }}" type="image/x-icon"/>
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('template/favicon.ico') }}"/>
-    <!-- Generated: 2018-04-16 09:29:05 +0200 -->
-    <title>@yield('title','Masarifi') - Masarifi</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <!-- Dashboard Core -->
-    <link href="{{ asset('template/assets/css/dashboard.rtl.css') }}" rel="stylesheet"/>
-    <script src="{{ asset('template/assets/js/dashboard.js') }}"></script>
-    <!-- c3.js Charts Plugin -->
-    <link href="{{ asset('template/assets/plugins/charts-c3/plugin.css') }}" rel="stylesheet"/>
-    <script src="{{ asset('template/assets/plugins/charts-c3/plugin.js') }}"></script>
-    <!-- Google Maps Plugin -->
-    <link href="{{ asset('template/assets/plugins/maps-google/plugin.css') }}" rel="stylesheet"/>
-    <script src="{{ asset('template/assets/plugins/maps-google/plugin.js') }}"></script>
-    <!-- Input Mask Plugin -->
-    <script src="{{ asset('template/assets/plugins/input-mask/plugin.js') }}"></script>
+    <title>@yield('title','مصاريفي') - مصاريفي</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{{ asset('template/css/rtl/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- not use this in ltr -->
+    <link href="{{ asset('template/css/rtl/bootstrap.rtl.css ') }}" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="{{ asset('template/css/plugins/metisMenu/metisMenu.min.css ') }}" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="{{ asset('template/css/plugins/timeline.css ') }}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{ asset('template/css/rtl/sb-admin-2.css ') }}" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="{{ asset('template/css/plugins/morris.css ') }}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{{ asset('template/css/font-awesome/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
-<body class="">
-<div class="page">
-    <div class="page-main">
-        <div class="header py-4">
-            <div class="container">
-                <div class="d-flex">
-                    <a class="header-brand" href="">
-                        <img src="{{ asset('template/demo/brand/tabler.svg') }}" class="header-brand-img"
-                             alt="tabler logo">
-                    </a>
-                    <div class="d-flex order-lg-2 ml-auto">
+
+<body>
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+        </div>
+        <!-- /.navbar-header -->
+
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-messages">
+                    <li>
+                        <a href="#">
+                            <div>
+                                <strong>John Smith</strong>
+                                <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                            </div>
+                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <strong>John Smith</strong>
+                                <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                            </div>
+                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <strong>John Smith</strong>
+                                <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                            </div>
+                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a class="text-center" href="#">
+                            <strong>Read All Messages</strong>
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-messages -->
+            </li>
+            <!-- /.dropdown -->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-tasks">
+                    <li>
+                        <a href="#">
+                            <div>
+                                <p>
+                                    <strong>Task 1</strong>
+                                    <span class="pull-right text-muted">40% Complete</span>
+                                </p>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                        <span class="sr-only">40% Complete (success)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <p>
+                                    <strong>Task 2</strong>
+                                    <span class="pull-right text-muted">20% Complete</span>
+                                </p>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                        <span class="sr-only">20% Complete</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <p>
+                                    <strong>Task 3</strong>
+                                    <span class="pull-right text-muted">60% Complete</span>
+                                </p>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                        <span class="sr-only">60% Complete (warning)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <p>
+                                    <strong>Task 4</strong>
+                                    <span class="pull-right text-muted">80% Complete</span>
+                                </p>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                        <span class="sr-only">80% Complete (danger)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a class="text-center" href="#">
+                            <strong>See All Tasks</strong>
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-tasks -->
+            </li>
+            <!-- /.dropdown -->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-alerts">
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-comment fa-fw"></i> New Comment
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                <span class="pull-right text-muted small">12 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-envelope fa-fw"></i> Message Sent
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-tasks fa-fw"></i> New Task
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a class="text-center" href="#">
+                            <strong>See All Alerts</strong>
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-alerts -->
+            </li>
+            <!-- /.dropdown -->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li></a>
                         <div class="nav-item d-none d-md-flex">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                <i class="fa fa-sign-out fa-fw"></i> Logout
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
                         </div>
-                        <div class="dropdown d-none d-md-flex">
-                            <a class="nav-link icon" data-toggle="dropdown">
-                                <i class="fe fe-bell"></i>
-                                <span class="nav-unread"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                <a href="#" class="dropdown-item d-flex">
-                                    <span class="avatar mr-3 align-self-center"
-                                          style="background-image: url({{ asset('template/demo/faces/male/41.jpg') }})"></span>
-                                    <div>
-                                        <strong>Nathan</strong> pushed new commit: Fix page load performance issue.
-                                        <div class="small text-muted">10 minutes ago</div>
-                                    </div>
-                                </a>
-                                <a href="#" class="dropdown-item d-flex">
-                                    <span class="avatar mr-3 align-self-center"
-                                          style="background-image: url({{ asset('template/demo/faces/female/1.jpg') }})"></span>
-                                    <div>
-                                        <strong>Alice</strong> started new task: Tabler UI design.
-                                        <div class="small text-muted">1 hour ago</div>
-                                    </div>
-                                </a>
-                                <a href="#" class="dropdown-item d-flex">
-                                    <span class="avatar mr-3 align-self-center"
-                                          style="background-image: url({{ asset('template/demo/faces/female/18.jpg') }})"></span>
-                                    <div>
-                                        <strong>Rose</strong> deployed new version of NodeJS REST Api V3
-                                        <div class="small text-muted">2 hours ago</div>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item text-center text-muted-dark">Mark all as read</a>
-                            </div>
-                        </div>
-                        <div class="dropdown">
-                            <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-                                <span class="avatar" style="background-image: url({{ asset('template/demo/faces/female/25.jpg') }})"></span>
-                                <span class="ml-2 d-none d-lg-block">
-                      <span class="text-default">Jane Pearson</span>
-                      <small class="text-muted d-block mt-1">Administrator</small>
-                    </span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon fe fe-user"></i> Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon fe fe-settings"></i> Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <span class="float-right"><span class="badge badge-primary">6</span></span>
-                                    <i class="dropdown-icon fe fe-mail"></i> Inbox
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon fe fe-send"></i> Message
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon fe fe-help-circle"></i> Need help?
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon fe fe-log-out"></i> Sign out
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse"
-                       data-target="#headerMenuCollapse">
-                        <span class="header-toggler-icon"></span>
-                    </a>
-                </div>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+            <!-- /.dropdown -->
+        </ul>
+        <!-- /.navbar-top-links -->
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                @yield('sidebar')
             </div>
+            <!-- /.sidebar-collapse -->
         </div>
-        <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
-            <div class="container">
-                @yield('navbar')
+        <!-- /.navbar-static-side -->
+    </nav>
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">@yield('title_content')</h1>
             </div>
-        </div>
-        <div class="my-3 my-md-5">
-            <div class="container">
+
+            <div class="col-lg-12">
                 @yield('content')
             </div>
+
+            <!-- /.col-lg-12 -->
         </div>
 
+        <!-- /.row -->
     </div>
-    <div class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="row">
-                        <div class="col-6 col-md-3">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#">First link</a></li>
-                                <li><a href="#">Second link</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-6 col-md-3">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#">Third link</a></li>
-                                <li><a href="#">Fourth link</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-6 col-md-3">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#">Fifth link</a></li>
-                                <li><a href="#">Sixth link</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-6 col-md-3">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#">Other link</a></li>
-                                <li><a href="#">Last link</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-4 mt-lg-0">
-                    Premium and Open Source dashboard template with responsive and high quality UI. For Free!
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer class="footer">
-        <div class="container">
-            <div class="row align-items-center flex-row-reverse">
-                <div class="col-auto ml-lg-auto">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <ul class="list-inline list-inline-dots mb-0">
-                                <li class="list-inline-item"><a href="">Documentation</a></li>
-                                <li class="list-inline-item"><a href="">FAQ</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-auto">
-                            <a href="https://github.com/tabler/tabler" class="btn btn-outline-primary btn-sm">Source
-                                code</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
-                    Copyright © 2018 <a href=".">Tabler</a>. Theme by <a href="https://codecalm.net" target="_blank">codecalm.net</a>
-                    All rights reserved.
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- /#page-wrapper -->
+
 </div>
+<!-- /#wrapper -->
+
+<!-- jQuery Version 1.11.0 -->
+<script src="{{ asset('template/js/jquery-1.11.0.js') }}"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="{{ asset('template/js/bootstrap.min.js') }}"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="{{ asset('template/js/metisMenu/metisMenu.min.js') }}"></script>
+
+<!-- Morris Charts JavaScript -->
+<script src="{{ asset('template/js/raphael/raphael.min.js') }}"></script>
+<script src="{{ asset('template/js/morris/morris.min.js') }}"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="{{ asset('template/js/sb-admin-2.js') }}"></script>
+<script src="{{ asset('template/js/jquery/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('template/js/bootstrap/dataTables.bootstrap.min.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#dataTables-example').dataTable();
+    });
+</script>
+
 </body>
+
 </html>

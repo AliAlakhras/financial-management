@@ -11,20 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layout.template');
-});
+//Route::get('/', 'LoginController@showLoginForm');
+
+
 
 Auth::routes();
 
 Route::resource('company', 'CompanyController')->middleware('isAdmin');
-Route::get('user/{id}/createUserFromAdminToCompany','UserController@createUserFromAdminToCompany')->name('user.createUserFromAdminToCompany')->middleware('isAdmin');
-Route::put('user/{id}/storeUserFromAdminToCompany','UserController@storeUserFromAdminToCompany')->name('user.storeUserFromAdminToCompany')->middleware('isAdmin');
+Route::get('user/{id}/createUserFromAdminToCompany', 'UserController@createUserFromAdminToCompany')->name('user.createUserFromAdminToCompany')->middleware('isAdmin');
+Route::put('user/{id}/storeUserFromAdminToCompany', 'UserController@storeUserFromAdminToCompany')->name('user.storeUserFromAdminToCompany')->middleware('isAdmin');
+Route::resource('user', 'UserController')->middleware('isEmployeeAdmin');
 
 Route::get('employees', 'UserController@employees')->name('user.employees');
 Route::get('vendors', 'UserController@vendors')->name('user.vendors');
-
-Route::resource('user', 'UserController')->middleware('isEmployeeAdmin');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
