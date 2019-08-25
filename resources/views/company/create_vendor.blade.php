@@ -27,7 +27,7 @@
         <form class="form-signin" action="{{ route('user.storeVendorFromCompanyAdmin') }}" method="post">
             @csrf
             <h1 class="h3 mb-3 font-weight-normal">الرجاء إدخال بيانات المستخدم</h1>
-            <input type="text" class="form-control" name="name" placeholder="@lang('auth.name')" required autofocus>
+            <input type="text" class="form-control" name="name" placeholder="أدخل إسم المورد" required autofocus>
             <input type="email" class="form-control" name="email" placeholder="@lang('auth.email')" required>
             <input type="password" class="form-control" name="password" placeholder="@lang('auth.password')" required>
             <input type="password" class="form-control" name="password_confirmation" placeholder="@lang('auth.confirm password')" required>

@@ -38,9 +38,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        @if($companies)
-                            @foreach($companies as $company)
+                    @if($companies)
+                        @foreach($companies as $company)
+                            <tr>
+
                                 <th scope="row" style="text-align: center;">{{ $company->id }}</th>
                                 <td>{{ $company->name  }}</td>
                                 <td>{{ $company->type  }}</td>
@@ -61,8 +62,8 @@
                                         </button>
                                     </form>
                                 </td>
-                    </tr>
-                    @endforeach
+                            </tr>
+                        @endforeach
                     @else
                         <tr>
                             <td colspan="6">No data</td>

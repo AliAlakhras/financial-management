@@ -36,17 +36,19 @@
                         <th scope="col" style="text-align: center;">@lang('company.id')</th>
                         <th scope="col" style="text-align: center;">@lang('company.name')</th>
                         <th scope="col" style="text-align: center;">@lang('company.email')</th>
+                        <th scope="col" style="text-align: center;">@lang('company.role_id')</th>
                         <th scope="col" style="text-align: center;">@lang('company.action')</th>
                     </tr>
                     </thead>
                     <tbody>
                     @if($employees)
+                        @foreach($employees as $employee)
                     <tr>
 
-                            @foreach($employees as $employee)
                                 <th scope="row" style="text-align: center;">{{ $employee->id }}</th>
                                 <td>{{ $employee->name  }}</td>
                                 <td>{{ $employee->email  }}</td>
+                                <td>{{ $employee->company_role_id  }}</td>
                                 <td>
                                     <a href="{{ route('user.edit', $employee->id) }}" class="btn btn-primary"
                                        role="button">@lang('company.edit')</a>

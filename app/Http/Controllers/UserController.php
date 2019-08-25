@@ -80,7 +80,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $employee = User::find($id);
+        $employee->name= $request->input('name');
+        $employee->email= $request->input('email');
+        $employee->company_role_id= $request->input('company_role_id');
+        $employee->save();
+        return redirect('employees');
+
     }
 
     /**
@@ -139,5 +145,22 @@ class UserController extends Controller
         $request['password'] = Hash::make($request['password']);
         User::create($request->all());
         return redirect('user');
+    }
+
+    public function editVendorFromCompanyAdmin($id)
+    {
+        $employee = User::find($id);
+        return view('company.edit_vendor', compact('employee'));
+    }
+
+    public function updateVendorFromCompanyAdmin(Request $request, $id)
+    {
+        $employee = User::find($id);
+        $employee->name= $request->input('name');
+        $employee->email= $request->input('email');
+        $employee->company_role_id= $request->input('company_role_id');
+        $employee->save();
+        return redirect('vendors');
+
     }
 }

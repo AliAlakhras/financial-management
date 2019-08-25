@@ -37,18 +37,19 @@
                         <th scope="col" style="text-align: center;">@lang('company.name')</th>
                         <th scope="col" style="text-align: center;">@lang('company.email')</th>
                         <th scope="col" style="text-align: center;">@lang('company.action')</th>
+
                     </tr>
                     </thead>
                     <tbody>
                     @if($vendors)
-                    <tr>
+                        @foreach($vendors as $vendor)
+                            <tr>
 
-                            @foreach($vendors as $vendor)
                                 <th scope="row" style="text-align: center;">{{ $vendor->id }}</th>
                                 <td>{{ $vendor->name  }}</td>
                                 <td>{{ $vendor->email  }}</td>
                                 <td>
-                                    <a href="{{ route('user.edit', $vendor->id) }}" class="btn btn-primary"
+                                    <a href="{{ route('user.editVendorFromCompanyAdmin', $vendor->id) }}" class="btn btn-primary"
                                        role="button">@lang('company.edit')</a>
                                     <form action="{{ route('user.destroy',$vendor->id) }}" method="post"
                                           style="display: inline">
@@ -59,13 +60,13 @@
                                         </button>
                                     </form>
                                 </td>
-                            @endforeach
-                    </tr>
-                    @else
-                        <tr>
-                            <td colspan="6">No data</td>
-                        </tr>
-                    @endif
+                                @endforeach
+                            </tr>
+                            @else
+                                <tr>
+                                    <td colspan="6">No data</td>
+                                </tr>
+                            @endif
                     </tbody>
                 </table>
             </div>
