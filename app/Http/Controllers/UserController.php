@@ -66,7 +66,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee = User::find($id);
+        $roles_company = CompanyRole::all();
+        return view('company.edit_employee', compact('employee', 'roles_company'));
     }
 
     /**
@@ -89,7 +91,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+        return redirect ('user');
     }
 
     public function employees()

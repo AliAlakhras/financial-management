@@ -6,6 +6,9 @@
 @section('sidebar')
     <ul class="nav" id="side-menu">
         <li>
+            <a href="{{ route('user.index') }}"><i class="fa fa-dashboard fa-fw"></i> الشركة</a>
+        </li>
+        <li>
             <a href="{{ route('user.employees') }}"><i class="fa fa-dashboard fa-fw"></i> الموظفين</a>
         </li>
         <li>
@@ -37,8 +40,9 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @if($employees)
                     <tr>
-                        @if($employees)
+
                             @foreach($employees as $employee)
                                 <th scope="row" style="text-align: center;">{{ $employee->id }}</th>
                                 <td>{{ $employee->name  }}</td>
@@ -55,8 +59,9 @@
                                         </button>
                                     </form>
                                 </td>
+                            @endforeach
                     </tr>
-                    @endforeach
+
                     @else
                         <tr>
                             <td colspan="6">No data</td>
@@ -64,10 +69,6 @@
                     @endif
                     </tbody>
                 </table>
-                <div align="left">
-                    <a href="{{ route('user.create' ,$employee->id ) }}" class="btn btn-primary"
-                       role="button">إضافة موظف</a>
-                </div>
             </div>
         </div>
     </div>

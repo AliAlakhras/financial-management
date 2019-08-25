@@ -6,6 +6,9 @@
 @section('sidebar')
     <ul class="nav" id="side-menu">
         <li>
+            <a href="{{ route('user.index') }}"><i class="fa fa-dashboard fa-fw"></i> الشركة</a>
+        </li>
+        <li>
             <a href="{{ route('user.employees') }}"><i class="fa fa-dashboard fa-fw"></i> الموظفين</a>
         </li>
         <li>
@@ -37,8 +40,9 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @if($vendors)
                     <tr>
-                        @if($vendors)
+
                             @foreach($vendors as $vendor)
                                 <th scope="row" style="text-align: center;">{{ $vendor->id }}</th>
                                 <td>{{ $vendor->name  }}</td>
@@ -55,8 +59,8 @@
                                         </button>
                                     </form>
                                 </td>
+                            @endforeach
                     </tr>
-                    @endforeach
                     @else
                         <tr>
                             <td colspan="6">No data</td>
@@ -64,10 +68,6 @@
                     @endif
                     </tbody>
                 </table>
-                <div align="left">
-                    <a href="{{ route('user.createVendorFromCompanyAdmin' ,$vendor->id ) }}" class="btn btn-primary"
-                       role="button">إضافة مورد</a>
-                </div>
             </div>
         </div>
     </div>
