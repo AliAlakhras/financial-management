@@ -60,6 +60,8 @@
                                             @lang('company.delete')
                                         </button>
                                     </form>
+                                    <a href="{{ route('user.editPasswordFromCompanyAdmin', $employee->id) }}" class="btn btn-primary"
+                                       role="button">تغيير كلمة المرور</a>
                                 </td>
                             @endforeach
                     </tr>

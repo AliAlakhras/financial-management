@@ -25,6 +25,9 @@ Route::post('user/storeVendorFromCompanyAdmin', 'UserController@storeVendorFromC
 Route::get('user/{id}/editVendorFromCompanyAdmin', 'UserController@editVendorFromCompanyAdmin')->name('user.editVendorFromCompanyAdmin')->middleware('isEmployeeAdmin');
 Route::put('user/{id}/updateVendorFromCompanyAdmin', 'UserController@updateVendorFromCompanyAdmin')->name('user.updateVendorFromCompanyAdmin')->middleware('isEmployeeAdmin');
 Route::resource('user', 'UserController')->middleware('isEmployeeAdmin');
+Route::get('user/{id}/editPasswordFromCompanyAdmin', 'UserController@editPasswordFromCompanyAdmin')->name('user.editPasswordFromCompanyAdmin')->middleware('isEmployeeAdmin');
+Route::put('user/{id}/updatePasswordFromCompanyAdmin', 'UserController@updatePasswordFromCompanyAdmin')->name('user.updatePasswordFromCompanyAdmin')->middleware('isEmployeeAdmin');
+
 
 Route::get('employees', 'UserController@employees')->name('user.employees');
 Route::get('vendors', 'UserController@vendors')->name('user.vendors');

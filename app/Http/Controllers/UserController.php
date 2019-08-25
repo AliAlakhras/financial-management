@@ -163,4 +163,18 @@ class UserController extends Controller
         return redirect('vendors');
 
     }
+    public function editPasswordFromCompanyAdmin($id)
+    {
+        $employee = User::find($id);
+        return view('company.edit_password', compact('employee'));
+
+    }
+    public function updatePasswordFromCompanyAdmin(Request $request, $id)
+    {
+        $employee = User::find($id);
+        $request['password'] = Hash::make($request['password']);
+        $employee->save();
+        return redirect('employees');
+
+    }
 }
