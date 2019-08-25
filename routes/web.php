@@ -14,7 +14,7 @@
 //Route::get('/', 'LoginController@showLoginForm');
 
 
-
+Route::get('/', 'HomeController@index');
 Auth::routes();
 
 Route::resource('company', 'CompanyController')->middleware('isAdmin');
