@@ -7,10 +7,10 @@
 @section('sidebar')
     <ul class="nav" id="side-menu">
         <li>
-            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> الموظفين</a>
+            <a href="{{ route('user.employees') }}"><i class="fa fa-dashboard fa-fw"></i> الموظفين</a>
         </li>
         <li>
-            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> الموردين</a>
+            <a href="{{ route('user.vendors') }}"><i class="fa fa-dashboard fa-fw"></i> الموردين</a>
         </li>
         <li>
             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>

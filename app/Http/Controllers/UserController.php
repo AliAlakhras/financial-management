@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\CompanyRole;
-use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -98,14 +97,14 @@ class UserController extends Controller
         $users = User::all();
         $employees = $users->where('role_id', 2);
 
-        return view('company.user', compact('employees'));
+        return view('company.employees', compact('employees'));
     }
 
     public function vendors()
     {
         $users = User::all();
         $vendors = $users->where('role_id', 3);
-        return view('company.user', compact('vendors'));
+        return view('company.vendors', compact('vendors'));
     }
 
     public function createUserFromAdminToCompany($id)
