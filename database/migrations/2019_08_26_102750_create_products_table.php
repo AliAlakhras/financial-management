@@ -16,11 +16,10 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->float('quantity');
-            $table->float('cost');
-            $table->float('total');
+            $table->float('quantity')->default(0);
+            $table->float('cost')->default(0);
+            $table->float('total')->default(0);
             $table->unsignedBigInteger('company_id');
-
 
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
