@@ -56,7 +56,7 @@
         </div>
 
         <div style="float: left; width: 50%">
-            <h2> الرصيد المتبقي: </h2>
+            <h2> الرصيد المتبقي: {{ $total }} </h2>
         </div>
 
     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\CompanyRole;
 use App\User;
+use App\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('company.index');
+        $wallet = Wallet::all();
+        $total = $wallet->sum('income');
+        return view('company.index', compact('total'));
     }
 
     /**
