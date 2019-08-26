@@ -30,7 +30,8 @@
             <input type="text" class="form-control" name="name" placeholder="أدخل إسم المورد" required autofocus>
             <input type="email" class="form-control" name="email" placeholder="@lang('auth.email')" required>
             <input type="password" class="form-control" name="password" placeholder="@lang('auth.password')" required>
-            <input type="password" class="form-control" name="password_confirmation" placeholder="@lang('auth.confirm password')" required>
+            <input type="password" class="form-control" name="password_confirmation"
+                   placeholder="@lang('auth.confirm password')" required>
             <div class="card-footer text-right">
                 <button type="submit" class="btn btn-primary">@lang('auth.register')</button>
             </div>

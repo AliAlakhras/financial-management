@@ -34,7 +34,8 @@
             <a class="btn btn-primary" href="{{ route('user.create') }}" role="button">إضافة موظف</a>
         </li>
         <li style="margin-bottom: 5px">
-            <a href="{{ route('user.createVendorFromCompanyAdmin') }}" class="btn btn-primary" role="button">إضافة مورد</a>
+            <a href="{{ route('user.createVendorFromCompanyAdmin') }}" class="btn btn-primary" role="button">إضافة
+                مورد</a>
         </li>
         <li style="margin-bottom: 5px">
             <a href="{{ route('company.create') }}" class="btn btn-primary" role="button">إضافة عملية شراء</a>
