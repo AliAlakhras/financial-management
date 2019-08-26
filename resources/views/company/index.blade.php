@@ -25,7 +25,7 @@
             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> عمليات الشراء</a>
         </li>
         <li>
-            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> المخزن</a>
+            <a href="{{ route('product.index') }}"><i class="fa fa-dashboard fa-fw"></i> المخزن</a>
         </li>
     </ul>
 @endsection
@@ -44,7 +44,7 @@
                     <a href="{{ route('wallet.create') }}" class="btn btn-primary" role="button">إضافة رصيد</a>
                 </li>
                 <li style="margin-bottom: 5px">
-                    <a href="" class="btn btn-primary" role="button">إضافة منتج</a>
+                    <a href="{{ route('product.create') }}" class="btn btn-primary" role="button">إضافة منتج</a>
                 </li>
                 <li style="margin-bottom: 5px">
                     <a href="{{ route('company.create') }}" class="btn btn-primary" role="button">إضافة عملية شراء</a>
