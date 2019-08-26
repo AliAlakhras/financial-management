@@ -16,7 +16,7 @@
             <a href="{{ route('user.vendors') }}"><i class="fa fa-dashboard fa-fw"></i> الموردين</a>
         </li>
         <li>
-            <a href=""><i class="fa fa-dashboard fa-fw"></i> المحفظة</a>
+            <a href="{{ route('wallet.index') }}"><i class="fa fa-dashboard fa-fw"></i> المحفظة</a>
         </li>
         <li>
             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
@@ -41,7 +41,7 @@
                     <a href="{{ route('user.createVendorFromCompanyAdmin') }}" class="btn btn-primary" role="button">إضافة مورد</a>
                 </li>
                 <li style="margin-bottom: 5px">
-                    <a href="" class="btn btn-primary" role="button">إضافة رصيد</a>
+                    <a href="{{ route('wallet.create') }}" class="btn btn-primary" role="button">إضافة رصيد</a>
                 </li>
                 <li style="margin-bottom: 5px">
                     <a href="" class="btn btn-primary" role="button">إضافة منتج</a>

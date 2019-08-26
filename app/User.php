@@ -1,7 +1,6 @@
 <?php
 
 namespace App;
-
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -38,5 +37,9 @@ class User extends Authenticatable
 
     public function roles(){
         return $this->belongsTo(Role::class);
+    }
+
+    public function wallets(){
+        return $this->hasMany(Wallet::class);
     }
 }

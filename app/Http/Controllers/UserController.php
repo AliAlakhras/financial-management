@@ -103,7 +103,6 @@ class UserController extends Controller
     }
 
     public function employees()
-       // where('role_id', 2)->andWhere('company_id', Auth::user()->company_id);
     {
         $users = User::all();
         $employees = $users->where('role_id',  2)->where('company_id', Auth::user()->company_id);
@@ -131,7 +130,6 @@ class UserController extends Controller
         $request['role_id'] = 2;
         $request['password'] = Hash::make($request['password']);
         User::create($request->all());
-
         return redirect('company');
     }
 
