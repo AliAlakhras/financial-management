@@ -28,7 +28,7 @@
             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> المخزن</a>
         </li>
     </ul>
-@endsection@endsection
+@endsection
 @section('content')
     <div class="col-md-8">
     <form class="form-signin" action="{{ route('wallet.update', $wallet->id) }}" method="post">
