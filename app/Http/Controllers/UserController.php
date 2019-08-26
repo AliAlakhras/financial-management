@@ -20,7 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $wallet = Wallet::all();
+        $all = Wallet::all();
+        $wallet = $all->where('company_id', Auth::user()->company_id);
         $total = $wallet->sum('income');
         return view('company.index', compact('total'));
     }
