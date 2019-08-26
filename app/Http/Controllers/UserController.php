@@ -7,6 +7,7 @@ use App\CompanyRole;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -102,9 +103,10 @@ class UserController extends Controller
     }
 
     public function employees()
+       // where('role_id', 2)->andWhere('company_id', Auth::user()->company_id);
     {
         $users = User::all();
-        $employees = $users->where('role_id', 2);
+        $employees = $users->where('role_id',  2)->where('company_id', Auth::user()->company_id);
 
         return view('company.employees', compact('employees'));
     }
@@ -112,7 +114,7 @@ class UserController extends Controller
     public function vendors()
     {
         $users = User::all();
-        $vendors = $users->where('role_id', 3);
+        $vendors = $users->where('role_id',  3)->where('company_id', Auth::user()->company_id);
         return view('company.vendors', compact('vendors'));
     }
 

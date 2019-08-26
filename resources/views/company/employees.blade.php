@@ -41,8 +41,8 @@
                     </thead>
                     <tbody>
                     @if($employees)
-                        <tr>
-                            @foreach($employees as $employee)
+                        @foreach($employees as $employee)
+                            <tr>
                                 <th scope="row" style="text-align: center;">{{ $employee->id }}</th>
                                 <td>{{ $employee->name  }}</td>
                                 <td>{{ $employee->email  }}</td>
@@ -58,13 +58,13 @@
                                         </button>
                                     </form>
                                 </td>
-                            @endforeach
-                        </tr>
-                    @else
-                        <tr>
-                            <td colspan="6">No data</td>
-                        </tr>
-                    @endif
+                                @endforeach
+                            </tr>
+                            @else
+                                <tr>
+                                    <td colspan="6">No data</td>
+                                </tr>
+                            @endif
                     </tbody>
                 </table>
             </div>
