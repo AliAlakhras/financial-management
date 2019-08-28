@@ -19,6 +19,9 @@
             <a href="{{ route('wallet.index') }}"><i class="fa fa-dashboard fa-fw"></i> المحفظة</a>
         </li>
         <li>
+            <a href="{{ route('expense.index') }}"><i class="fa fa-dashboard fa-fw"></i> المصروفات</a>
+        </li>
+        <li>
             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
         </li>
         <li>
@@ -45,6 +48,9 @@
                 </li>
                 <li style="margin-bottom: 5px">
                     <a href="{{ route('product.create') }}" class="btn btn-primary" role="button">إضافة منتج</a>
+                </li>
+                <li style="margin-bottom: 5px">
+                    <a href="{{ route('expense.create') }}" class="btn btn-primary" role="button">إضافة مصروفات</a>
                 </li>
                 <li style="margin-bottom: 5px">
                     <a href="{{ route('company.create') }}" class="btn btn-primary" role="button">إضافة عملية شراء</a>

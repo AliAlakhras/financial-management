@@ -35,4 +35,5 @@ Route::get('vendors', 'UserController@vendors')->name('user.vendors');
 
 Route::resource('wallet', 'WalletController')->middleware('isEmployeeAdmin');
 Route::resource('product', 'ProductController')->middleware('isEmployeeAdmin');
+Route::resource('expense', 'ExpenseController')->middleware('isEmployeeAdmin');
 Route::get('/home', 'HomeController@index')->name('home');
