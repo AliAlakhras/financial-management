@@ -60,35 +60,40 @@
                     <tbody>
                     @if($expenses)
                         @foreach($expenses as $expense)
-                            <th scope="row" style="text-align: center;">{{ $expense->id }}</th>
-                            <td>{{ $expense->name }}</td>
-                            <td>{{ $expense->price }}</td>
-                            @foreach($users as $user)
-                                @if($user->id == $expense->user_id)
-                                    <td>{{ $user->name  }}</td>
-                                @endif
-                            @endforeach
-                            <td>{{ $expense->created_at }}</td>
-                            <td>
-                                <a href="{{ route('expense.edit', $expense->id) }}" class="btn btn-primary"
-                                   role="button">@lang('company.edit')</a>
-                                <form action="{{ route('expense.destroy', $expense->id) }}" method="post"
-                                      style="display: inline">
-                                    @csrf
-                                    {{ method_field('delete') }}
-                                    <button class="btn btn-danger" type="submit">
-                                        @lang('company.delete')
-                                    </button>
-                                </form>
-                            </td>
+                            <tr>
+
+
+                                <th scope="row" style="text-align: center;">{{ $expense->id }}</th>
+                                <td>{{ $expense->name }}</td>
+                                <td>{{ $expense->price }}</td>
+                                @foreach($users as $user)
+                                    @if($user->id == $expense->user_id)
+                                        <td>{{ $user->name  }}</td>
+                                    @endif
+                                @endforeach
+                                <td>{{ $expense->created_at }}</td>
+                                <td>
+                                    <a href="{{ route('expense.edit', $expense->id) }}" class="btn btn-primary"
+                                       role="button">@lang('company.edit')</a>
+                                    <form action="{{ route('expense.destroy', $expense->id) }}" method="post"
+                                          style="display: inline">
+                                        @csrf
+                                        {{ method_field('delete') }}
+                                        <button class="btn btn-danger" type="submit">
+                                            @lang('company.delete')
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="6">No data</td>
+                            <td colspan="6">لا يوجد بيانات</td>
                         </tr>
                     @endif
                     </tbody>
                 </table>
+                <h3> الرصيد المتبقي : {{ $total }}</h3>
             </div>
         </div>
     </div>

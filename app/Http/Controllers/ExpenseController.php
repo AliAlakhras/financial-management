@@ -19,7 +19,8 @@ class ExpenseController extends Controller
     {
         $expenses = Expense::where('company_id', Auth::user()->company_id)->get();
         $users = User::all();
-        return view('expense.index', compact('expenses', 'users'));
+        $total = $this->total();
+        return view('expense.index', compact('expenses', 'users', 'total'));
     }
 
     /**
@@ -40,10 +41,7 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        $wallets = Wallet::where('company_id', Auth::user()->company_id);
-        $expenses = Expense::where('company_id', Auth::user()->company_id);
-        $total = $wallets->sum('income') - $expenses->sum('price');
-        if($request['price'] <= $total){
+        if($request['price'] <= $this->total()){
             $request['user_id'] = Auth::user()->id;
             $request['company_id'] = Auth::user()->company_id;
             Expense::create($request->all());
@@ -86,10 +84,7 @@ class ExpenseController extends Controller
     public function update(Request $request, $id)
     {
         $expense = Expense::find($id);
-        $wallets = Wallet::where('company_id', Auth::user()->company_id);
-        $expenses = Expense::where('company_id', Auth::user()->company_id);
-        $total = $wallets->sum('income') - $expenses->sum('price');
-        if ($request['price'] <= $total){
+        if ($request['price'] <= $this->total()){
             $expense->user_id = Auth::user()->id;
             $expense->name = $request->input('name');
             $expense->price = $request->input('price');
@@ -110,5 +105,12 @@ class ExpenseController extends Controller
     {
         Expense::find($id)->delete();
         return redirect('expense')->with(['success' => 'تم الحذف بنجاح']);
+    }
+
+    public function total(){
+        $wallets = Wallet::where('company_id', Auth::user()->company_id);
+        $expenses = Expense::where('company_id', Auth::user()->company_id);
+        $total = $wallets->sum('income') - $expenses->sum('price');
+        return $total;
     }
 }
