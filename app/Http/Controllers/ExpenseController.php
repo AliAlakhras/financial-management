@@ -18,7 +18,7 @@ class ExpenseController extends Controller
     public function index()
     {
         $expenses = Expense::where('company_id', Auth::user()->company_id)->get();
-        $users = User::all();
+        $users = User::where('company_id', Auth::user()->company_id)->get();
         $total_expenses = $expenses->sum('price');
         return view('expense.index', compact('expenses', 'users', 'total_expenses'));
     }
