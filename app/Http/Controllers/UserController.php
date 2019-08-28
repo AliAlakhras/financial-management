@@ -8,7 +8,6 @@ use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -110,7 +109,6 @@ class UserController extends Controller
     {
         $users = User::all();
         $employees = $users->where('role_id',  2)->where('company_id', Auth::user()->company_id);
-
         return view('company.employees', compact('employees'));
     }
 
@@ -179,6 +177,17 @@ class UserController extends Controller
         $request['password'] = Hash::make($request['password']);
         $employee->save();
         return redirect('employees');
+    }
 
+    public function getEmployees(Request $request)
+    {
+        if ($request->ajax()){
+            $employees = User::where('role_id',  2)->where('company_id', Auth::user()->company_id);
+            return datatables()->of($employees)
+                ->addColumn('action',function($row){
+                    return '<a href="'.route('user.edit', $row->id).'" class="btn btn-sm btn-primary">Edit</a>';
+                })
+                ->toJson();
+        }
     }
 }

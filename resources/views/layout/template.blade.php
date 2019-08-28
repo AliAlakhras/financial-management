@@ -330,11 +330,7 @@
 <script src="{{ asset('template/js/jquery/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('template/js/bootstrap/dataTables.bootstrap.min.js') }}"></script>
 
-<script>
-    $(document).ready(function () {
-        $('#dataTables-example').dataTable();
-    });
-</script>
+@yield('jsFooter')
 
 </body>
 

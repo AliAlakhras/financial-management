@@ -30,6 +30,7 @@ Route::put('user/{id}/updatePasswordFromCompanyAdmin', 'UserController@updatePas
 
 
 Route::get('employees', 'UserController@employees')->name('user.employees');
+Route::get('getEmployees', 'UserController@getEmployees')->name('user.getEmployees');
 Route::get('vendors', 'UserController@vendors')->name('user.vendors');
 
 Route::resource('wallet', 'WalletController')->middleware('isEmployeeAdmin');

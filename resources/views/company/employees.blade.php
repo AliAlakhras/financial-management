@@ -70,4 +70,40 @@
             </div>
         </div>
     </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="dataTables">
+                    <thead>
+                    <tr style="text-align: center;">
+                        <th scope="col" style="text-align: center;">id</th>
+                        <th scope="col" style="text-align: center;">name</th>
+                        <th scope="col" style="text-align: center;">email</th>
+                        <th scope="col" style="text-align: center;">action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('jsFooter')
+    <script>
+        $('#dataTables-example').dataTable();
+        $(document).ready(function () {
+            $('#dataTables').dataTable({
+                serverSide: true,
+                ajax: '{{ url('getEmployees') }}',
+                columns: [
+                    {data: 'id'},
+                    {data: 'name'},
+                    {data: 'email'},
+                    {data: 'action'},
+                ]
+            });
+        });
+    </script>
 @endsection
