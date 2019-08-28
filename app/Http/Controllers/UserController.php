@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\CompanyRole;
+use App\Expense;
 use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
@@ -19,9 +20,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $all = Wallet::all();
-        $wallet = $all->where('company_id', Auth::user()->company_id);
-        $total = $wallet->sum('income');
+        $wallets = Wallet::where('company_id', Auth::user()->company_id);
+        $expenses = Expense::where('company_id', Auth::user()->company_id);
+        $total = $total = $wallets->sum('income') - $expenses->sum('price');
         return view('company.index', compact('total'));
     }
 

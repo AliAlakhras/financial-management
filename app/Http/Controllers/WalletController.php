@@ -16,8 +16,7 @@ class WalletController extends Controller
      */
     public function index()
     {
-        $all = Wallet::all();
-        $wallets = $all->where('company_id', Auth::user()->company_id);
+        $wallets = Wallet::where('company_id', Auth::user()->company_id)->get();
         $users = User::all();
         return view('wallet.index', compact('wallets', 'users'));
     }
