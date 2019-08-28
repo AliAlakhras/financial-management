@@ -93,7 +93,7 @@
                     @endif
                     </tbody>
                 </table>
-                <h3> الرصيد المتبقي : {{ $total }}</h3>
+                <h4 align="left"> مجموع المصروفات : {{ $total_expenses }}</h4>
             </div>
         </div>
     </div>
