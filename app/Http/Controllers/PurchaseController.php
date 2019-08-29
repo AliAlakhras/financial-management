@@ -116,7 +116,8 @@ class PurchaseController extends Controller
         $new_product = Product::find($purchasedetailes->product_id);
         $new_product->quantity = $product->quantity - $purchasedetailes->quantity;
         $new_product->total = $product->total - ($purchasedetailes->quantity * $purchasedetailes->cost);
-        if ($new_product->quantity == 0){
+        if ($new_product->quantity == 0)
+        {
             $new_product->cost = 0;
         }
         $new_product->save();
