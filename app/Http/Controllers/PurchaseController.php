@@ -23,7 +23,7 @@ class PurchaseController extends Controller
         $purchases = Purchase::where('company_id', Auth::user()->company_id)->with('purchasedetailes')->get();
         $users = User::where('company_id', Auth::user()->company_id)->get();
         $products = Product::where('company_id', Auth::user()->company_id)->get();
-        $total_purchases = $purchases->sum('price');
+        $total_purchases = $purchases->sum('total');
         return view('purchase.index', compact('purchases', 'users', 'total_purchases', 'products'));
     }
 
@@ -57,6 +57,7 @@ class PurchaseController extends Controller
             $addToProduct = Product::find($request['product_id']);
             $addToProduct->quantity = $request->input('quantity') + $addToProduct->quantity;
             $addToProduct->cost = $request->input('cost');
+            $addToProduct->total = $addToProduct->quantity *  $addToProduct->cost;
             $addToProduct->save();
             return redirect('purchase')->with(['success' => 'تم الإضافة بنجاح']);
         }else{
@@ -83,7 +84,11 @@ class PurchaseController extends Controller
      */
     public function edit($id)
     {
-        //
+        $purchase = Purchase::find($id);
+        $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->first();
+        $products = Product::where('company_id', Auth::user()->company_id)->get();
+        $vendors = User::where('role_id',  3)->where('company_id', Auth::user()->company_id)->get();
+        return view('purchase.edit', compact('purchase', 'purchasedetailes', 'products', 'vendors'));
     }
 
     /**
@@ -106,17 +111,28 @@ class PurchaseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->select('product_id', 'quantity', 'cost')->first();
+        $product = Product::where('id', $purchasedetailes->product_id)->select('quantity', 'cost', 'total')->first();
+        $new_product = Product::find($purchasedetailes->product_id);
+        $new_product->quantity = $product->quantity - $purchasedetailes->quantity;
+        $new_product->total = $product->total - ($purchasedetailes->quantity * $purchasedetailes->cost);
+        if ($new_product->quantity == 0){
+            $new_product->cost = 0;
+        }
+        $new_product->save();
+        PurchaseDetailes::where('purchase_id', $id)->delete();
+        Purchase::find($id)->delete();
+
+        return redirect('purchase')->with(['success' => 'تم الحذف بنجاح']);
     }
 
     public function total(){
         $wallets = Wallet::where('company_id', Auth::user()->company_id);
         $expenses = Expense::where('company_id', Auth::user()->company_id);
-        $total = $wallets->sum('income') - $expenses->sum('price');
+        $purchase = Purchase::where('company_id', Auth::user()->company_id);
+        $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
         return $total;
     }
 
-    public function storePurchase(){
 
-    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Expense;
+use App\Purchase;
 use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
@@ -111,7 +112,8 @@ class ExpenseController extends Controller
     public function total(){
         $wallets = Wallet::where('company_id', Auth::user()->company_id);
         $expenses = Expense::where('company_id', Auth::user()->company_id);
-        $total = $wallets->sum('income') - $expenses->sum('price');
+        $purchase = Purchase::where('company_id', Auth::user()->company_id);
+        $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
         return $total;
     }
 }

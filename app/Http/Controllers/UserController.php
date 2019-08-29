@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\CompanyRole;
 use App\Expense;
+use App\Purchase;
 use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
@@ -20,9 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $wallets = Wallet::where('company_id', Auth::user()->company_id);
-        $expenses = Expense::where('company_id', Auth::user()->company_id);
-        $total = $total = $wallets->sum('income') - $expenses->sum('price');
+        $total = $this->total();
         return view('company.index', compact('total'));
     }
 
@@ -190,5 +189,13 @@ class UserController extends Controller
                 })
                 ->toJson();
         }
+    }
+
+    public function total(){
+        $wallets = Wallet::where('company_id', Auth::user()->company_id);
+        $expenses = Expense::where('company_id', Auth::user()->company_id);
+        $purchase = Purchase::where('company_id', Auth::user()->company_id);
+        $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
+        return $total;
     }
 }

@@ -66,12 +66,18 @@
                             <tr>
                                 <th scope="row" style="text-align: center;">{{ $purchase->id }}</th>
                                 @foreach($products as $product)
-                                    @if($product->id == $purchase->purchasedetailes->product_id)
-                                        <td>{{ $product->name }}</td>
-                                    @endif
+                                    @foreach($purchase->purchasedetailes as $purch)
+                                        @if($product->id == $purch->product_id)
+                                            <td>{{ $product->name }}</td>
+                                        @endif
+                                    @endforeach
                                 @endforeach
-                                <td>{{ $purchase->purchasedetailes->quantity }}</td>
-                                <td>{{ $purchase->purchasedetailes->cost }}</td>
+                                @foreach($purchase->purchasedetailes as $purch)
+                                    <td>{{ $purch->quantity }}</td>
+                                @endforeach
+                                @foreach($purchase->purchasedetailes as $purch)
+                                    <td>{{ $purch->cost }}</td>
+                                @endforeach
                                 <td>{{ $purchase->total }}</td>
                                 @foreach($users as $user)
                                     @if($user->id == $purchase->user_id)
@@ -85,9 +91,9 @@
                                 @endforeach
                                 <td>{{ $purchase->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('expense.edit', $purchase->id) }}" class="btn btn-primary"
+                                    <a href="{{ route('purchase.edit', $purchase->id) }}" class="btn btn-primary"
                                        role="button">@lang('company.edit')</a>
-                                    <form action="{{ route('expense.destroy', $purchase->id) }}" method="post"
+                                    <form action="{{ route('purchase.destroy', $purchase->id) }}" method="post"
                                           style="display: inline">
                                         @csrf
                                         {{ method_field('delete') }}
