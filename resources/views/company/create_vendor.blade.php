@@ -6,19 +6,28 @@
 @section('sidebar')
     <ul class="nav" id="side-menu">
         <li>
-            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+            <a href="{{ route('user.index') }}"><i class="fa fa-dashboard fa-fw"></i> الشركة</a>
         </li>
         <li>
-            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level">
-                <li>
-                    <a href="flot.html">Flot Charts</a>
-                </li>
-                <li>
-                    <a href="morris.html">Morris.js Charts</a>
-                </li>
-            </ul>
-            <!-- /.nav-second-level -->
+            <a href="{{ route('user.employees') }}"><i class="fa fa-dashboard fa-fw"></i> الموظفين</a>
+        </li>
+        <li>
+            <a href="{{ route('user.vendors') }}"><i class="fa fa-dashboard fa-fw"></i> الموردين</a>
+        </li>
+        <li>
+            <a href="{{ route('wallet.index') }}"><i class="fa fa-dashboard fa-fw"></i> المحفظة</a>
+        </li>
+        <li>
+            <a href="{{ route('expense.index') }}"><i class="fa fa-dashboard fa-fw"></i> المصروفات</a>
+        </li>
+        <li>
+            <a href=""><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
+        </li>
+        <li>
+            <a href="{{ route('purchase.index') }}"><i class="fa fa-dashboard fa-fw"></i> عمليات الشراء</a>
+        </li>
+        <li>
+            <a href="{{ route('product.index') }}"><i class="fa fa-dashboard fa-fw"></i> المخزن</a>
         </li>
     </ul>
 @endsection

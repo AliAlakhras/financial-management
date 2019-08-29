@@ -3,7 +3,6 @@
 @section('title','صفحة الشركة')
 
 @section('title_content','المحفظة')
-
 @section('sidebar')
     <ul class="nav" id="side-menu">
         <li>
@@ -19,10 +18,13 @@
             <a href="{{ route('wallet.index') }}"><i class="fa fa-dashboard fa-fw"></i> المحفظة</a>
         </li>
         <li>
-            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
+            <a href="{{ route('expense.index') }}"><i class="fa fa-dashboard fa-fw"></i> المصروفات</a>
         </li>
         <li>
-            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> عمليات الشراء</a>
+            <a href=""><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
+        </li>
+        <li>
+            <a href="{{ route('purchase.index') }}"><i class="fa fa-dashboard fa-fw"></i> عمليات الشراء</a>
         </li>
         <li>
             <a href="{{ route('product.index') }}"><i class="fa fa-dashboard fa-fw"></i> المخزن</a>

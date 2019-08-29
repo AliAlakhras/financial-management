@@ -22,7 +22,7 @@
             <a href="{{ route('expense.index') }}"><i class="fa fa-dashboard fa-fw"></i> المصروفات</a>
         </li>
         <li>
-            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
+            <a href=""><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
         </li>
         <li>
             <a href="{{ route('purchase.index') }}"><i class="fa fa-dashboard fa-fw"></i> عمليات الشراء</a>
