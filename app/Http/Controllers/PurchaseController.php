@@ -35,19 +35,19 @@ class PurchaseController extends Controller
     public function create()
     {
         $products = Product::where('company_id', Auth::user()->company_id)->get();
-        $vendors = User::where('role_id',  3)->where('company_id', Auth::user()->company_id)->get();
+        $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
         return view('purchase.create', compact('products', 'vendors'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        if (($request['quantity'] * $request['cost']) <= $this->total()){
+        if (($request['quantity'] * $request['cost']) <= $this->total()) {
             $request['user_id'] = Auth::user()->id;
             $request['company_id'] = Auth::user()->company_id;
             $request['total'] = $request['quantity'] * $request['cost'];
@@ -57,10 +57,10 @@ class PurchaseController extends Controller
             $addToProduct = Product::find($request['product_id']);
             $addToProduct->quantity = $request->input('quantity') + $addToProduct->quantity;
             $addToProduct->cost = $request->input('cost');
-            $addToProduct->total = $addToProduct->quantity *  $addToProduct->cost;
+            $addToProduct->total = $addToProduct->quantity * $addToProduct->cost;
             $addToProduct->save();
             return redirect('purchase')->with(['success' => 'تم الإضافة بنجاح']);
-        }else{
+        } else {
             return redirect('purchase')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
         }
     }
@@ -68,7 +68,7 @@ class PurchaseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -79,7 +79,7 @@ class PurchaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -87,26 +87,70 @@ class PurchaseController extends Controller
         $purchase = Purchase::find($id);
         $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->first();
         $products = Product::where('company_id', Auth::user()->company_id)->get();
-        $vendors = User::where('role_id',  3)->where('company_id', Auth::user()->company_id)->get();
+        $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
         return view('purchase.edit', compact('purchase', 'purchasedetailes', 'products', 'vendors'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        if (($request->input('quantity') * $request->input('cost')) <= $this->total()) {
+            $purchase = Purchase::find($id);
+            $purchase->total = $request->input('quantity') * $request->input('cost');
+            $purchase->user_id = Auth::user()->id;
+            $purchase->vendor_id = $request->input('vendor_id');
+            $purchase->save();
+
+            $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->select('id', 'product_id', 'quantity', 'cost')->first();
+            $purchasedetailesDone = PurchaseDetailes::find($purchasedetailes->id);
+            $purchasedetailesDone->product_id = $request->input('product_id');
+            $purchasedetailesDone->quantity = $request->input('quantity');
+            $purchasedetailesDone->cost = $request->input('cost');
+            $purchasedetailesDone->save();
+
+            if ($request->input('product_id') == $purchasedetailes->product_id) {
+                $new_product = Product::find($purchasedetailesDone->product_id);
+                $quantity = PurchaseDetailes::where('product_id', $purchasedetailesDone->product_id)->get('quantity');
+                $new_product->quantity = $quantity->sum('quantity');
+                $new_product->cost = $purchasedetailesDone->cost;
+                $new_product->total = $purchasedetailesDone->quantity * $purchasedetailesDone->cost;
+                if ($new_product->quantity == 0) {
+                    $new_product->cost = 0;
+                }
+                $new_product->save();
+            } elseif ($request->input('product_id') != $purchasedetailes->product_id) {
+                $new_product = Product::find($purchasedetailesDone->product_id);
+                $quantity = PurchaseDetailes::where('product_id', $purchasedetailesDone->product_id)->get('quantity');
+                $new_product->quantity = $quantity->sum('quantity');
+                $new_product->cost = $purchasedetailesDone->cost;
+                $new_product->total = $purchasedetailesDone->quantity * $purchasedetailesDone->cost;
+                $old_product = Product::find($purchasedetailes->product_id);
+                $oldquantity = PurchaseDetailes::where('product_id', $purchasedetailes->product_id)->get('quantity');
+                $old_product->quantity = $oldquantity->sum('quantity');
+                $old_product->cost = $purchasedetailesDone->cost;
+                $old_product->total = $old_product->quantity * $old_product->cost;
+                if ($new_product->quantity == 0 && $old_product->quantity == 0) {
+                    $new_product->cost = 0;
+                }
+                $new_product->save();
+                $old_product->save();
+            }
+            return redirect('purchase')->with(['success' => 'تم التديل بنجاح']);
+        } else {
+            return redirect('purchase')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -116,8 +160,7 @@ class PurchaseController extends Controller
         $new_product = Product::find($purchasedetailes->product_id);
         $new_product->quantity = $product->quantity - $purchasedetailes->quantity;
         $new_product->total = $product->total - ($purchasedetailes->quantity * $purchasedetailes->cost);
-        if ($new_product->quantity == 0)
-        {
+        if ($new_product->quantity == 0) {
             $new_product->cost = 0;
         }
         $new_product->save();
@@ -127,13 +170,13 @@ class PurchaseController extends Controller
         return redirect('purchase')->with(['success' => 'تم الحذف بنجاح']);
     }
 
-    public function total(){
+    public function total()
+    {
         $wallets = Wallet::where('company_id', Auth::user()->company_id);
         $expenses = Expense::where('company_id', Auth::user()->company_id);
         $purchase = Purchase::where('company_id', Auth::user()->company_id);
         $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
         return $total;
     }
-
 
 }
