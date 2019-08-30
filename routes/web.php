@@ -11,12 +11,9 @@
 |
 */
 
-//Route::get('/', 'LoginController@showLoginForm');
-
 
 Route::get('/', 'HomeController@index');
 Auth::routes();
-
 Route::resource('company', 'CompanyController')->middleware('isAdmin');
 Route::get('user/{id}/createUserFromAdminToCompany', 'UserController@createUserFromAdminToCompany')->name('user.createUserFromAdminToCompany')->middleware('isAdmin');
 Route::put('user/{id}/storeUserFromAdminToCompany', 'UserController@storeUserFromAdminToCompany')->name('user.storeUserFromAdminToCompany')->middleware('isAdmin');
@@ -27,17 +24,13 @@ Route::put('user/{id}/updateVendorFromCompanyAdmin', 'UserController@updateVendo
 Route::resource('user', 'UserController')->middleware('isEmployeeAdmin');
 Route::get('user/{id}/editPasswordFromCompanyAdmin', 'UserController@editPasswordFromCompanyAdmin')->name('user.editPasswordFromCompanyAdmin')->middleware('isEmployeeAdmin');
 Route::put('user/{id}/updatePasswordFromCompanyAdmin', 'UserController@updatePasswordFromCompanyAdmin')->name('user.updatePasswordFromCompanyAdmin')->middleware('isEmployeeAdmin');
-
-
 Route::get('employees', 'UserController@employees')->name('user.employees');
 Route::get('getEmployees', 'UserController@getEmployees')->name('user.getEmployees');
 Route::get('vendors', 'UserController@vendors')->name('user.vendors');
-
 Route::resource('wallet', 'WalletController')->middleware('isEmployeeAdmin');
 Route::resource('product', 'ProductController')->middleware('isEmployeeAdmin');
 Route::resource('expense', 'ExpenseController')->middleware('isEmployeeAdmin');
 Route::resource('purchase', 'PurchaseController')->middleware('isEmployeeAdmin');
 Route::resource('sale', 'SaleController')->middleware('isEmployeeAdmin');
 Route::resource('debt', 'DebtController')->middleware('isEmployeeAdmin');
-
 Route::get('/home', 'HomeController@index')->name('home');
