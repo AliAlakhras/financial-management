@@ -13,4 +13,8 @@ class Product extends Model
     public function purchasedetailes(){
         return $this->hasMany(PurchaseDetailes::class);
     }
+
+    public function sale(){
+        return $this->hasMany(Sale::class);
+    }
 }

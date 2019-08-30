@@ -22,7 +22,7 @@
             <a href="{{ route('expense.index') }}"><i class="fa fa-dashboard fa-fw"></i> المصروفات</a>
         </li>
         <li>
-            <a href=""><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
+            <a href="{{ route('sale.index') }}"><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
         </li>
         <li>
             <a href="{{ route('purchase.index') }}"><i class="fa fa-dashboard fa-fw"></i> عمليات الشراء</a>
@@ -56,7 +56,7 @@
                     <a href="{{ route('purchase.create') }}" class="btn btn-primary" role="button">إضافة عملية شراء</a>
                 </li>
                 <li style="margin-bottom: 5px">
-                    <a href="{{ route('company.create') }}" class="btn btn-primary" role="button">إضافة عملية بيع</a>
+                    <a href="{{ route('sale.create') }}" class="btn btn-primary" role="button">إضافة عملية بيع</a>
                 </li>
             </ul>
         </div>
