@@ -104,3 +104,8 @@
         </div>
     </div>
 @endsection
+@section('jsFooter')
+    <script>
+        $('#dataTables-example').dataTable();
+    </script>
+@endsection

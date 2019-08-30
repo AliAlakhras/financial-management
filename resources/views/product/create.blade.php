@@ -2,7 +2,7 @@
 
 @section('title','صفحة الشركة')
 
-@section('title_content','المحفظة')
+@section('title_content','المخزن')
 @section('sidebar')
     <ul class="nav" id="side-menu">
         <li>
@@ -21,7 +21,7 @@
             <a href="{{ route('expense.index') }}"><i class="fa fa-dashboard fa-fw"></i> المصروفات</a>
         </li>
         <li>
-            <a href=""><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
+            <a href="{{ route('sale.index') }}"><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
         </li>
         <li>
             <a href="{{ route('purchase.index') }}"><i class="fa fa-dashboard fa-fw"></i> عمليات الشراء</a>
