@@ -38,5 +38,6 @@ Route::resource('product', 'ProductController')->middleware('isEmployeeAdmin');
 Route::resource('expense', 'ExpenseController')->middleware('isEmployeeAdmin');
 Route::resource('purchase', 'PurchaseController')->middleware('isEmployeeAdmin');
 Route::resource('sale', 'SaleController')->middleware('isEmployeeAdmin');
+Route::resource('debt', 'DebtController')->middleware('isEmployeeAdmin');
 
 Route::get('/home', 'HomeController@index')->name('home');

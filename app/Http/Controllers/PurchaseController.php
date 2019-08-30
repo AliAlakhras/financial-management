@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Debt;
 use App\Expense;
 use App\Product;
 use App\Purchase;
@@ -54,6 +55,8 @@ class PurchaseController extends Controller
             $purchase = Purchase::create($request->all());
             $request['purchase_id'] = $purchase->id;
             PurchaseDetailes::create($request->all());
+            $request['due'] = $request['total'] - $request['paid'];
+            Debt::create($request->all());
             $addToProduct = Product::find($request['product_id']);
             $addToProduct->quantity = $request->input('quantity') + $addToProduct->quantity;
             $addToProduct->cost = $request->input('cost');
@@ -141,7 +144,7 @@ class PurchaseController extends Controller
                 $new_product->save();
                 $old_product->save();
             }
-            return redirect('purchase')->with(['success' => 'تم التديل بنجاح']);
+            return redirect('purchase')->with(['success' => 'تم التعديل بنجاح']);
         } else {
             return redirect('purchase')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
         }
