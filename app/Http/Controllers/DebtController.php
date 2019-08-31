@@ -17,9 +17,14 @@ class DebtController extends Controller
      */
     public function index()
     {
-        $purchases = Purchase::where('company_id', Auth::user()->company_id)->with('debts')->get();
-        $users = User::where('company_id', Auth::user()->company_id)->get();
-        return view('debt.index', compact('purchases', 'users'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $purchases = Purchase::where('company_id', Auth::user()->company_id)->with('debts')->get();
+            $users = User::where('company_id', Auth::user()->company_id)->get();
+            return view('debt.index', compact('purchases', 'users'));
+        }else{
+            return redirect('getDebtsForEmployee');
+        }
+
     }
 
     /**
@@ -62,8 +67,14 @@ class DebtController extends Controller
      */
     public function edit($id)
     {
-        $dept = Debt::find($id);
-        return view('debt.edit', compact('dept'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $dept = Debt::find($id);
+            return view('debt.edit', compact('dept'));
+        }else{
+            $dept = Debt::find($id);
+            return view('employee.edit_debt', compact('dept'));
+        }
+
     }
 
     /**
@@ -80,7 +91,12 @@ class DebtController extends Controller
         $debt->paid = $request->input('paid');
         $debt->due = $total - $debt->paid;
         $debt->save();
-        return redirect('debt')->with(['success' => 'تم التعديل بنجاح']);
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            return redirect('debt')->with(['success' => 'تم التعديل بنجاح']);
+        }else{
+            return redirect('getDebtsForEmployee')->with(['success' => 'تم الإضافة بنجاح']);
+        }
+
     }
 
     /**
@@ -92,7 +108,11 @@ class DebtController extends Controller
     public function destroy($id)
     {
         Debt::find($id)->delete();
-        return redirect('debt');
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            return redirect('debt')->with(['success' => 'تم الحذف بنجاح']);
+        }else{
+            return redirect('getDebtsForEmployee')->with(['success' => 'تم الحذف بنجاح']);
+        }
     }
 
     public function getDebtsForEmployee()

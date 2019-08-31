@@ -22,11 +22,15 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        $purchases = Purchase::where('company_id', Auth::user()->company_id)->with('purchasedetailes')->get();
-        $users = User::where('company_id', Auth::user()->company_id)->get();
-        $products = Product::where('company_id', Auth::user()->company_id)->get();
-        $total_purchases = $purchases->sum('total');
-        return view('purchase.index', compact('purchases', 'users', 'total_purchases', 'products'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $purchases = Purchase::where('company_id', Auth::user()->company_id)->with('purchasedetailes')->get();
+            $users = User::where('company_id', Auth::user()->company_id)->get();
+            $products = Product::where('company_id', Auth::user()->company_id)->get();
+            $total_purchases = $purchases->sum('total');
+            return view('purchase.index', compact('purchases', 'users', 'total_purchases', 'products'));
+        }else{
+            return redirect('getPurchasesForEmployee');
+        }
     }
 
     /**
@@ -36,9 +40,16 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        $products = Product::where('company_id', Auth::user()->company_id)->get();
-        $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
-        return view('purchase.create', compact('products', 'vendors'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $products = Product::where('company_id', Auth::user()->company_id)->get();
+            $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
+            return view('purchase.create', compact('products', 'vendors'));
+        }else{
+            $products = Product::where('company_id', Auth::user()->company_id)->get();
+            $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
+            return view('employee.create_purchase', compact('products', 'vendors'));
+        }
+
     }
 
     /**
@@ -98,11 +109,20 @@ class PurchaseController extends Controller
      */
     public function edit($id)
     {
-        $purchase = Purchase::find($id);
-        $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->first();
-        $products = Product::where('company_id', Auth::user()->company_id)->get();
-        $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
-        return view('purchase.edit', compact('purchase', 'purchasedetailes', 'products', 'vendors'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $purchase = Purchase::find($id);
+            $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->first();
+            $products = Product::where('company_id', Auth::user()->company_id)->get();
+            $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
+            return view('purchase.edit', compact('purchase', 'purchasedetailes', 'products', 'vendors'));
+        }else{
+            $purchase = Purchase::find($id);
+            $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->first();
+            $products = Product::where('company_id', Auth::user()->company_id)->get();
+            $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
+            return view('employee.edit_purchase', compact('purchase', 'purchasedetailes', 'products', 'vendors'));
+        }
+
     }
 
     /**

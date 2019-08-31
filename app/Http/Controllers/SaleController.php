@@ -18,11 +18,16 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $sales = Sale::where('company_id', Auth::user()->company_id)->get();
-        $users = User::where('company_id', Auth::user()->company_id)->get();
-        $products = Product::where('company_id', Auth::user()->company_id)->get();
-        $total_sales = $sales->sum('total');
-        return view('sale.index', compact('sales', 'users', 'products', 'total_sales'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $sales = Sale::where('company_id', Auth::user()->company_id)->get();
+            $users = User::where('company_id', Auth::user()->company_id)->get();
+            $products = Product::where('company_id', Auth::user()->company_id)->get();
+            $total_sales = $sales->sum('total');
+            return view('sale.index', compact('sales', 'users', 'products', 'total_sales'));
+        }else{
+            return redirect('getSalesForEmployee');
+        }
+
     }
 
     /**
@@ -32,8 +37,14 @@ class SaleController extends Controller
      */
     public function create()
     {
-        $products = Product::where('company_id', Auth::user()->company_id)->get();
-        return view('sale.create', compact('products'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $products = Product::where('company_id', Auth::user()->company_id)->get();
+            return view('sale.create', compact('products'));
+        }else{
+            $products = Product::where('company_id', Auth::user()->company_id)->get();
+            return view('employee.create_sale', compact('products'));
+        }
+
     }
 
     /**
@@ -90,9 +101,16 @@ class SaleController extends Controller
      */
     public function edit($id)
     {
-        $sale = Sale::find($id);
-        $products = Product::where('company_id', Auth::user()->company_id)->get();
-        return view('sale.edit', compact('sale', 'products'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $sale = Sale::find($id);
+            $products = Product::where('company_id', Auth::user()->company_id)->get();
+            return view('sale.edit', compact('sale', 'products'));
+        }else{
+            $sale = Sale::find($id);
+            $products = Product::where('company_id', Auth::user()->company_id)->get();
+            return view('employee.edit_sale', compact('sale', 'products'));
+        }
+
     }
 
     /**

@@ -15,8 +15,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('company_id', Auth::user()->company_id)->get();
-        return view('product.index', compact('products'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $products = Product::where('company_id', Auth::user()->company_id)->get();
+            return view('product.index', compact('products'));
+        }
     }
 
     /**
@@ -26,7 +28,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            return view('product.create');
+        }
+
     }
 
     /**
@@ -61,8 +66,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
-        return view('product.edit', compact('product'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $product = Product::find($id);
+            return view('product.edit', compact('product'));
+        }
+
     }
 
     /**
@@ -88,8 +96,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::find($id)->delete();
-        return redirect('product');
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            Product::find($id)->delete();
+            return redirect('product');
+        }
     }
 
     public function getProductsForEmployee()

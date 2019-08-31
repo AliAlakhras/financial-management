@@ -18,10 +18,14 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $expenses = Expense::where('company_id', Auth::user()->company_id)->get();
-        $users = User::where('company_id', Auth::user()->company_id)->get();
-        $total_expenses = $expenses->sum('price');
-        return view('expense.index', compact('expenses', 'users', 'total_expenses'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $expenses = Expense::where('company_id', Auth::user()->company_id)->get();
+            $users = User::where('company_id', Auth::user()->company_id)->get();
+            $total_expenses = $expenses->sum('price');
+            return view('expense.index', compact('expenses', 'users', 'total_expenses'));
+        }else{
+            return redirect('getExpensesForEmployee');
+        }
 
     }
 
@@ -32,7 +36,12 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        return view('expense.create');
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            return view('expense.create');
+        }else{
+            return view('employee.create_expense');
+        }
+
     }
 
     /**
@@ -80,8 +89,14 @@ class ExpenseController extends Controller
      */
     public function edit($id)
     {
-        $expense = Expense::find($id);
-        return view('expense.edit', compact('expense'));
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+            $expense = Expense::find($id);
+            return view('expense.edit', compact('expense'));
+        }else{
+            $expense = Expense::find($id);
+            return view('employee.edit_expense', compact('expense'));
+        }
+
     }
 
     /**
