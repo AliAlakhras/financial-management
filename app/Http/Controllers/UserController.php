@@ -198,4 +198,9 @@ class UserController extends Controller
         $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
         return $total;
     }
+
+    public function employeePage(){
+        $total = $this->total();
+        return view('employee.index',compact('total'));
+    }
 }

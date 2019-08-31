@@ -47,9 +47,17 @@ class ExpenseController extends Controller
             $request['user_id'] = Auth::user()->id;
             $request['company_id'] = Auth::user()->company_id;
             Expense::create($request->all());
-            return redirect('expense')->with(['success' => 'تم الإضافة بنجاح']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getExpensesForEmployee')->with(['success' => 'تم الإضافة بنجاح']);
+            }else{
+                return redirect('expense')->with(['success' => 'تم الإضافة بنجاح']);
+            }
         }else{
-            return redirect('expense')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getExpensesForEmployee')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            }else{
+                return redirect('expense')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            }
         }
     }
 
@@ -91,9 +99,17 @@ class ExpenseController extends Controller
             $expense->name = $request->input('name');
             $expense->price = $request->input('price');
             $expense->save();
-            return redirect('expense')->with(['success' => 'تم التعديل بنجاح']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getExpensesForEmployee')->with(['success' => 'تم التعديل بنجاح']);
+            }else{
+                return redirect('expense')->with(['success' => 'تم التعديل بنجاح']);
+            }
         }else{
-            return redirect('expense')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getExpensesForEmployee')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            }else{
+                return redirect('expense')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            }
         }
     }
 
@@ -106,7 +122,11 @@ class ExpenseController extends Controller
     public function destroy($id)
     {
         Expense::find($id)->delete();
-        return redirect('expense')->with(['success' => 'تم الحذف بنجاح']);
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+            return redirect('getExpensesForEmployee')->with(['success' => 'تم الحذف بنجاح']);
+        }else{
+            return redirect('expense')->with(['success' => 'تم الحذف بنجاح']);
+        }
     }
 
     public function total(){
@@ -116,4 +136,11 @@ class ExpenseController extends Controller
         $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
         return $total;
     }
+
+    public function getExpensesForEmployee(){
+        $expenses = Expense::where('user_id', Auth::user()->id)->get();
+        $total_expenses = $expenses->sum('price');
+        return view('employee.get_expenses', compact('expenses', 'total_expenses'));
+    }
+
 }

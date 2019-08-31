@@ -11,26 +11,46 @@
 |
 */
 
-
 Route::get('/', 'HomeController@index');
 Auth::routes();
-Route::resource('company', 'CompanyController')->middleware('isAdmin');
-Route::get('user/{id}/createUserFromAdminToCompany', 'UserController@createUserFromAdminToCompany')->name('user.createUserFromAdminToCompany')->middleware('isAdmin');
-Route::put('user/{id}/storeUserFromAdminToCompany', 'UserController@storeUserFromAdminToCompany')->name('user.storeUserFromAdminToCompany')->middleware('isAdmin');
-Route::get('user/createVendorFromCompanyAdmin', 'UserController@createVendorFromCompanyAdmin')->name('user.createVendorFromCompanyAdmin')->middleware('isEmployeeAdmin');
-Route::post('user/storeVendorFromCompanyAdmin', 'UserController@storeVendorFromCompanyAdmin')->name('user.storeVendorFromCompanyAdmin')->middleware('isEmployeeAdmin');
-Route::get('user/{id}/editVendorFromCompanyAdmin', 'UserController@editVendorFromCompanyAdmin')->name('user.editVendorFromCompanyAdmin')->middleware('isEmployeeAdmin');
-Route::put('user/{id}/updateVendorFromCompanyAdmin', 'UserController@updateVendorFromCompanyAdmin')->name('user.updateVendorFromCompanyAdmin')->middleware('isEmployeeAdmin');
-Route::resource('user', 'UserController')->middleware('isEmployeeAdmin');
-Route::get('user/{id}/editPasswordFromCompanyAdmin', 'UserController@editPasswordFromCompanyAdmin')->name('user.editPasswordFromCompanyAdmin')->middleware('isEmployeeAdmin');
-Route::put('user/{id}/updatePasswordFromCompanyAdmin', 'UserController@updatePasswordFromCompanyAdmin')->name('user.updatePasswordFromCompanyAdmin')->middleware('isEmployeeAdmin');
-Route::get('employees', 'UserController@employees')->name('user.employees');
-Route::get('getEmployees', 'UserController@getEmployees')->name('user.getEmployees');
-Route::get('vendors', 'UserController@vendors')->name('user.vendors');
-Route::resource('wallet', 'WalletController')->middleware('isEmployeeAdmin');
-Route::resource('product', 'ProductController')->middleware('isEmployeeAdmin');
-Route::resource('expense', 'ExpenseController')->middleware('isEmployeeAdmin');
-Route::resource('purchase', 'PurchaseController')->middleware('isEmployeeAdmin');
-Route::resource('sale', 'SaleController')->middleware('isEmployeeAdmin');
-Route::resource('debt', 'DebtController')->middleware('isEmployeeAdmin');
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => ['auth']], function() {
+
+    Route::group(['middleware' => ['isAdmin']], function() {
+        Route::resource('company', 'CompanyController');
+        Route::get('user/{id}/createUserFromAdminToCompany', 'UserController@createUserFromAdminToCompany')->name('user.createUserFromAdminToCompany');
+        Route::put('user/{id}/storeUserFromAdminToCompany', 'UserController@storeUserFromAdminToCompany')->name('user.storeUserFromAdminToCompany');
+    });
+
+    Route::group(['middleware' => ['isEmployeeAdmin']], function() {
+        Route::get('user/createVendorFromCompanyAdmin', 'UserController@createVendorFromCompanyAdmin')->name('user.createVendorFromCompanyAdmin');
+        Route::post('user/storeVendorFromCompanyAdmin', 'UserController@storeVendorFromCompanyAdmin')->name('user.storeVendorFromCompanyAdmin');
+        Route::get('user/{id}/editVendorFromCompanyAdmin', 'UserController@editVendorFromCompanyAdmin')->name('user.editVendorFromCompanyAdmin');
+        Route::put('user/{id}/updateVendorFromCompanyAdmin', 'UserController@updateVendorFromCompanyAdmin')->name('user.updateVendorFromCompanyAdmin');
+        Route::resource('user', 'UserController');
+        Route::get('user/{id}/editPasswordFromCompanyAdmin', 'UserController@editPasswordFromCompanyAdmin')->name('user.editPasswordFromCompanyAdmin');
+        Route::put('user/{id}/updatePasswordFromCompanyAdmin', 'UserController@updatePasswordFromCompanyAdmin')->name('user.updatePasswordFromCompanyAdmin');
+        Route::get('employees', 'UserController@employees')->name('user.employees');
+        Route::get('getEmployees', 'UserController@getEmployees')->name('user.getEmployees');
+        Route::get('vendors', 'UserController@vendors')->name('user.vendors');
+        Route::resource('wallet', 'WalletController');
+
+    });
+
+    Route::group(['middleware' => ['isAdminAndEmployee']], function() {
+        Route::resource('product', 'ProductController');
+        Route::resource('expense', 'ExpenseController');
+        Route::resource('purchase', 'PurchaseController');
+        Route::resource('sale', 'SaleController');
+        Route::resource('debt', 'DebtController');
+        Route::get('employeePage', 'UserController@employeePage')->name('user.employeePage');
+        Route::get('getExpensesForEmployee','ExpenseController@getExpensesForEmployee')->name('expense.getExpensesForEmployee');
+        Route::get('getPurchasesForEmployee','PurchaseController@getPurchasesForEmployee')->name('purchase.getPurchasesForEmployee');
+        Route::get('getSalesForEmployee','SaleController@getSalesForEmployee')->name('sale.getSalesForEmployee');
+        Route::get('getDebtsForEmployee','DebtController@getDebtsForEmployee')->name('debt.getDebtsForEmployee');
+        Route::get('getProductsForEmployee','ProductController@getProductsForEmployee')->name('product.getProductsForEmployee');
+
+    });
+
+    Route::get('/home', 'HomeController@index')->name('home');
+});

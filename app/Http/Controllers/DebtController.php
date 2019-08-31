@@ -94,4 +94,11 @@ class DebtController extends Controller
         Debt::find($id)->delete();
         return redirect('debt');
     }
+
+    public function getDebtsForEmployee()
+    {
+        $purchases = Purchase::where('user_id', Auth::user()->id)->with('debts')->get();
+        $users = User::where('company_id', Auth::user()->company_id)->get();
+        return view('employee.get_debts', compact('purchases', 'users'));
+    }
 }

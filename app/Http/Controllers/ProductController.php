@@ -15,8 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $all = Product::all();
-        $products = $all->where('company_id', Auth::user()->company_id);
+        $products = Product::where('company_id', Auth::user()->company_id)->get();
         return view('product.index', compact('products'));
     }
 
@@ -91,5 +90,11 @@ class ProductController extends Controller
     {
         Product::find($id)->delete();
         return redirect('product');
+    }
+
+    public function getProductsForEmployee()
+    {
+        $products = Product::where('company_id', Auth::user()->company_id)->get();
+        return view('employee.get_products', compact('products'));
     }
 }

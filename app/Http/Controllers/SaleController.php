@@ -57,10 +57,17 @@ class SaleController extends Controller
             }
             $product->total = $product->quantity * $product->cost;
             $product->save();
-
-            return redirect('sale')->with(['success' => 'تم الإضافة بنجاح']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getSalesForEmployee')->with(['success' => 'تم الحذف بنجاح']);
+            }else{
+                return redirect('sale')->with(['success' => 'تم الإضافة بنجاح']);
+            }
         } else {
-            return redirect('sale')->with(['fail' => 'لا يوجد لديك كمية كافية']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getSalesForEmployee')->with(['fail' => 'لا يوجد لديك كمية كافية']);
+            }else{
+                return redirect('sale')->with(['fail' => 'لا يوجد لديك كمية كافية']);
+            }
         }
     }
 
@@ -128,9 +135,17 @@ class SaleController extends Controller
                 }
                 $oldProduct->save();
             }
-            return redirect('sale')->with(['success' => 'تم التعديل بنجاح']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getSalesForEmployee')->with(['success' => 'تم التعديل بنجاح']);
+            }else{
+                return redirect('sale')->with(['success' => 'تم التعديل بنجاح']);
+            }
         } else {
-            return redirect('sale')->with(['fail' => 'لا يوجد لديك كمية كافية']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getSalesForEmployee')->with(['fail' => 'لا يوجد لديك كمية كافية']);
+            }else{
+                return redirect('sale')->with(['fail' => 'لا يوجد لديك كمية كافية']);
+            }
         }
     }
 
@@ -148,6 +163,18 @@ class SaleController extends Controller
         $product->total = $product->quantity * $product->cost;
         $product->save();
         $sale->delete();
-        return redirect('sale')->with(['success' => 'تم الحذف بنجاح']);
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+            return redirect('getSalesForEmployee')->with(['success' => 'تم الحذف بنجاح']);
+        }else{
+            return redirect('sale')->with(['success' => 'تم الحذف بنجاح']);
+        }
+    }
+
+    public function getSalesForEmployee()
+    {
+        $sales = Sale::where('user_id', Auth::user()->id)->get();
+        $products = Product::where('company_id', Auth::user()->company_id)->get();
+        $total_sales = $sales->sum('total');
+        return view('employee.get_sales', compact('sales', 'products', 'total_sales'));
     }
 }

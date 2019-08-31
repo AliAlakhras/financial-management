@@ -7,6 +7,7 @@ use App\Expense;
 use App\Product;
 use App\Purchase;
 use App\PurchaseDetailes;
+use App\Sale;
 use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
@@ -55,16 +56,26 @@ class PurchaseController extends Controller
             $purchase = Purchase::create($request->all());
             $request['purchase_id'] = $purchase->id;
             PurchaseDetailes::create($request->all());
-            $request['due'] = $request['total'] - $request['paid'];
-            Debt::create($request->all());
+            if ($request['paid'] != $request['total']){
+                $request['due'] = $request['total'] - $request['paid'];
+                Debt::create($request->all());
+            }
             $addToProduct = Product::find($request['product_id']);
             $addToProduct->quantity = $request->input('quantity') + $addToProduct->quantity;
             $addToProduct->cost = $request->input('cost');
             $addToProduct->total = $addToProduct->quantity * $addToProduct->cost;
             $addToProduct->save();
-            return redirect('purchase')->with(['success' => 'تم الإضافة بنجاح']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getPurchasesForEmployee')->with(['success' => 'تم الإضافة بنجاح']);
+            }else{
+                return redirect('purchase')->with(['success' => 'تم الإضافة بنجاح']);
+            }
         } else {
-            return redirect('purchase')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getPurchasesForEmployee')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            }else{
+                return redirect('purchase')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            }
         }
     }
 
@@ -144,9 +155,17 @@ class PurchaseController extends Controller
                 $new_product->save();
                 $old_product->save();
             }
-            return redirect('purchase')->with(['success' => 'تم التعديل بنجاح']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getPurchasesForEmployee')->with(['success' => 'تم التعديل بنجاح']);
+            }else{
+                return redirect('purchase')->with(['success' => 'تم التعديل بنجاح']);
+            }
         } else {
-            return redirect('purchase')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+                return redirect('getPurchasesForEmployee')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            }else{
+                return redirect('purchase')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
+            }
         }
     }
 
@@ -168,9 +187,13 @@ class PurchaseController extends Controller
         }
         $new_product->save();
         PurchaseDetailes::where('purchase_id', $id)->delete();
+        Debt::where('purchase_id', $id)->delete();
         Purchase::find($id)->delete();
-
-        return redirect('purchase')->with(['success' => 'تم الحذف بنجاح']);
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+            return redirect('getPurchasesForEmployee')->with(['success' => 'تم الحذف بنجاح']);
+        }else{
+            return redirect('purchase')->with(['success' => 'تم الحذف بنجاح']);
+        }
     }
 
     public function total()
@@ -180,6 +203,14 @@ class PurchaseController extends Controller
         $purchase = Purchase::where('company_id', Auth::user()->company_id);
         $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
         return $total;
+    }
+
+    public function getPurchasesForEmployee(){
+        $purchases = Purchase::where('user_id', Auth::user()->id)->with('purchasedetailes')->get();
+        $users = User::where('company_id', Auth::user()->company_id)->get();
+        $products = Product::where('company_id', Auth::user()->company_id)->get();
+        $total_purchases = $purchases->sum('total');
+        return view('employee.get_purchases', compact('purchases', 'users', 'total_purchases', 'products'));
     }
 
 }
