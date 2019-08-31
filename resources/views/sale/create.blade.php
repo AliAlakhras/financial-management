@@ -29,6 +29,9 @@
         <li>
             <a href="{{ route('product.index') }}"><i class="fa fa-dashboard fa-fw"></i> المخزن</a>
         </li>
+        <li>
+            <a href="{{ route('debt.index') }}"><i class="fa fa-dashboard fa-fw"></i> الديون</a>
+        </li>
     </ul>
 @endsection
 

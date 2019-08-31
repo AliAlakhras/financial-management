@@ -2,6 +2,7 @@
 
 @section('title','صفحة الشركة')
 @section('title_content','المشتريات')
+
 @section('sidebar')
     <ul class="nav" id="side-menu">
         <li>
@@ -27,6 +28,9 @@
         </li>
         <li>
             <a href="{{ route('product.index') }}"><i class="fa fa-dashboard fa-fw"></i> المخزن</a>
+        </li>
+        <li>
+            <a href="{{ route('debt.index') }}"><i class="fa fa-dashboard fa-fw"></i> الديون</a>
         </li>
     </ul>
 @endsection
