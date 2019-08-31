@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\isAdmin;
+use App\Http\Middleware\isAdminAndEmployee;
 use App\Http\Middleware\isEmployeeAdmin;
 use App\Http\Middleware\isEmployeeEmployee;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'isAdmin' => isAdmin::class,
         'isEmployeeAdmin' => isEmployeeAdmin::class,
         'isEmployeeEmployee' => isEmployeeEmployee::class,
+        'isAdminAndEmployee' => isAdminAndEmployee::class,
     ];
 
     /**
