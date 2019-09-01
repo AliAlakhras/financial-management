@@ -37,11 +37,8 @@ class HomeController extends Controller
         }
     }
 
-    public function total(){
-        $wallets = Wallet::where('company_id', Auth::user()->company_id);
-        $expenses = Expense::where('company_id', Auth::user()->company_id);
-        $purchase = Purchase::where('company_id', Auth::user()->company_id);
-        $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
-        return $total;
-    }
+//    public function pageNotFound(){
+//        return redirect('home');
+//    }
+
 }

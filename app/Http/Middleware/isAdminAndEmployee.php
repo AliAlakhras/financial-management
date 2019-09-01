@@ -19,7 +19,7 @@ class isAdminAndEmployee
         if ((Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2) || (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1)) {
             return $next($request);
         } else {
-            return redirect('error');
+            return redirect('home');
         }
     }
 }

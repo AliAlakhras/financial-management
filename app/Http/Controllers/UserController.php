@@ -21,12 +21,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
-            $total = $this->total();
-            return view('company.index', compact('total'));
-        }else{
-            return redirect('employeePage');
-        }
+        $total = $this->total();
+        return view('company.index', compact('total'));
     }
 
     /**
@@ -36,10 +32,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
-            $roles_company = CompanyRole::all();
-            return view('company.create_user', compact('roles_company'));
-        }
+        $roles_company = CompanyRole::all();
+        return view('company.create_user', compact('roles_company'));
     }
 
     /**
@@ -76,11 +70,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
-            $employee = User::find($id);
-            $roles_company = CompanyRole::all();
-            return view('company.edit_employee', compact('employee', 'roles_company'));
-        }
+        $employee = User::find($id);
+        $roles_company = CompanyRole::all();
+        return view('company.edit_employee', compact('employee', 'roles_company'));
     }
 
     /**
@@ -93,9 +85,9 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $employee = User::find($id);
-        $employee->name= $request->input('name');
-        $employee->email= $request->input('email');
-        $employee->company_role_id= $request->input('company_role_id');
+        $employee->name = $request->input('name');
+        $employee->email = $request->input('email');
+        $employee->company_role_id = $request->input('company_role_id');
         $employee->save();
         return redirect('employees');
 
@@ -115,29 +107,23 @@ class UserController extends Controller
 
     public function employees()
     {
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
-            $users = User::all();
-            $employees = $users->where('role_id',  2)->where('company_id', Auth::user()->company_id);
-            return view('company.employees', compact('employees'));
-        }
+        $users = User::all();
+        $employees = $users->where('role_id', 2)->where('company_id', Auth::user()->company_id);
+        return view('company.employees', compact('employees'));
     }
 
     public function vendors()
     {
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
-            $users = User::all();
-            $vendors = $users->where('role_id',  3)->where('company_id', Auth::user()->company_id);
-            return view('company.vendors', compact('vendors'));
-        }
+        $users = User::all();
+        $vendors = $users->where('role_id', 3)->where('company_id', Auth::user()->company_id);
+        return view('company.vendors', compact('vendors'));
     }
 
     public function createUserFromAdminToCompany($id)
     {
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
-            $company = Company::find($id);
-            $roles_company = CompanyRole::all();
-            return view('admin.create_user', compact('roles_company', 'company'));
-        }
+        $company = Company::find($id);
+        $roles_company = CompanyRole::all();
+        return view('admin.create_user', compact('roles_company', 'company'));
     }
 
     public function storeUserFromAdminToCompany(Request $request, $id)
@@ -151,9 +137,7 @@ class UserController extends Controller
 
     public function createVendorFromCompanyAdmin()
     {
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
-            return view('company.create_vendor');
-        }
+        return view('company.create_vendor');
     }
 
     public function storeVendorFromCompanyAdmin(Request $request)
@@ -167,28 +151,28 @@ class UserController extends Controller
 
     public function editVendorFromCompanyAdmin($id)
     {
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
-            $employee = User::find($id);
-            return view('company.edit_vendor', compact('employee'));
-        }
+        $employee = User::find($id);
+        return view('company.edit_vendor', compact('employee'));
     }
 
     public function updateVendorFromCompanyAdmin(Request $request, $id)
     {
         $employee = User::find($id);
-        $employee->name= $request->input('name');
-        $employee->email= $request->input('email');
-        $employee->company_role_id= $request->input('company_role_id');
+        $employee->name = $request->input('name');
+        $employee->email = $request->input('email');
+        $employee->company_role_id = $request->input('company_role_id');
         $employee->save();
         return redirect('vendors');
 
     }
+
     public function editPasswordFromCompanyAdmin($id)
     {
         $employee = User::find($id);
         return view('company.edit_password', compact('employee'));
 
     }
+
     public function updatePasswordFromCompanyAdmin(Request $request, $id)
     {
         $employee = User::find($id);
@@ -199,17 +183,18 @@ class UserController extends Controller
 
     public function getEmployees(Request $request)
     {
-        if ($request->ajax()){
-            $employees = User::where('role_id',  2)->where('company_id', Auth::user()->company_id);
+        if ($request->ajax()) {
+            $employees = User::where('role_id', 2)->where('company_id', Auth::user()->company_id);
             return datatables()->of($employees)
-                ->addColumn('action',function($row){
-                    return '<a href="'.route('user.edit', $row->id).'" class="btn btn-sm btn-primary">Edit</a>';
+                ->addColumn('action', function ($row) {
+                    return '<a href="' . route('user.edit', $row->id) . '" class="btn btn-sm btn-primary">Edit</a>';
                 })
                 ->toJson();
         }
     }
 
-    public function total(){
+    public function total()
+    {
         $wallets = Wallet::where('company_id', Auth::user()->company_id);
         $expenses = Expense::where('company_id', Auth::user()->company_id);
         $purchase = Purchase::where('company_id', Auth::user()->company_id);
@@ -217,8 +202,9 @@ class UserController extends Controller
         return $total;
     }
 
-    public function employeePage(){
+    public function employeePage()
+    {
         $total = $this->total();
-        return view('employee.index',compact('total'));
+        return view('employee.index', compact('total'));
     }
 }

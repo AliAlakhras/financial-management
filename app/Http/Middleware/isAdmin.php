@@ -19,7 +19,7 @@ class isAdmin
         if (Auth::user() && Auth::user()->role_id == 1) {
             return $next($request);
         } else {
-            return redirect('error');
+            return redirect('home');
         }
     }
 }
