@@ -22,13 +22,13 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1) {
             $purchases = Purchase::where('company_id', Auth::user()->company_id)->with('purchasedetailes')->get();
             $users = User::where('company_id', Auth::user()->company_id)->get();
             $products = Product::where('company_id', Auth::user()->company_id)->get();
             $total_purchases = $purchases->sum('total');
             return view('purchase.index', compact('purchases', 'users', 'total_purchases', 'products'));
-        }else{
+        } else {
             return redirect('getPurchasesForEmployee');
         }
     }
@@ -40,11 +40,11 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1) {
             $products = Product::where('company_id', Auth::user()->company_id)->get();
             $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
             return view('purchase.create', compact('products', 'vendors'));
-        }else{
+        } else {
             $products = Product::where('company_id', Auth::user()->company_id)->get();
             $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
             return view('employee.create_purchase', compact('products', 'vendors'));
@@ -67,7 +67,7 @@ class PurchaseController extends Controller
             $purchase = Purchase::create($request->all());
             $request['purchase_id'] = $purchase->id;
             PurchaseDetailes::create($request->all());
-            if ($request['paid'] != $request['total']){
+            if ($request['paid'] != $request['total']) {
                 $request['due'] = $request['total'] - $request['paid'];
                 Debt::create($request->all());
             }
@@ -76,15 +76,15 @@ class PurchaseController extends Controller
             $addToProduct->cost = $request->input('cost');
             $addToProduct->total = $addToProduct->quantity * $addToProduct->cost;
             $addToProduct->save();
-            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2) {
                 return redirect('getPurchasesForEmployee')->with(['success' => 'تم الإضافة بنجاح']);
-            }else{
+            } else {
                 return redirect('purchase')->with(['success' => 'تم الإضافة بنجاح']);
             }
         } else {
-            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2) {
                 return redirect('getPurchasesForEmployee')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
-            }else{
+            } else {
                 return redirect('purchase')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
             }
         }
@@ -109,13 +109,13 @@ class PurchaseController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1) {
             $purchase = Purchase::find($id);
             $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->first();
             $products = Product::where('company_id', Auth::user()->company_id)->get();
             $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
             return view('purchase.edit', compact('purchase', 'purchasedetailes', 'products', 'vendors'));
-        }else{
+        } else {
             $purchase = Purchase::find($id);
             $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->first();
             $products = Product::where('company_id', Auth::user()->company_id)->get();
@@ -134,14 +134,14 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (($request->input('quantity') * $request->input('cost')) <= $this->total()) {
-            $purchase = Purchase::find($id);
+        $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->select('id', 'product_id', 'quantity', 'cost')->first();
+        $purchase = Purchase::find($id);
+        if (($request->input('quantity') < $purchasedetailes->quantity) || (($request->input('quantity') > $purchasedetailes->quantity) && ($this->total() >= (($request->input('quantity') - $purchasedetailes->quantity) * $request->input('cost'))))) {
             $purchase->total = $request->input('quantity') * $request->input('cost');
             $purchase->user_id = Auth::user()->id;
             $purchase->vendor_id = $request->input('vendor_id');
             $purchase->save();
 
-            $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->select('id', 'product_id', 'quantity', 'cost')->first();
             $purchasedetailesDone = PurchaseDetailes::find($purchasedetailes->id);
             $purchasedetailesDone->product_id = $request->input('product_id');
             $purchasedetailesDone->quantity = $request->input('quantity');
@@ -175,15 +175,15 @@ class PurchaseController extends Controller
                 $new_product->save();
                 $old_product->save();
             }
-            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2) {
                 return redirect('getPurchasesForEmployee')->with(['success' => 'تم التعديل بنجاح']);
-            }else{
+            } else {
                 return redirect('purchase')->with(['success' => 'تم التعديل بنجاح']);
             }
-        } else {
-            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+        } elseif (($request->input('quantity') > $purchasedetailes->quantity) && $purchase->total > $this->total()) {
+            if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2) {
                 return redirect('getPurchasesForEmployee')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
-            }else{
+            } else {
                 return redirect('purchase')->with(['fail' => 'لا يوجد لديك رصيد كافي']);
             }
         }
@@ -195,7 +195,8 @@ class PurchaseController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->select('product_id', 'quantity', 'cost')->first();
         $product = Product::where('id', $purchasedetailes->product_id)->select('quantity', 'cost', 'total')->first();
@@ -205,27 +206,40 @@ class PurchaseController extends Controller
         if ($new_product->quantity == 0) {
             $new_product->cost = 0;
         }
+        $sale = Sale::where('product_id', $purchasedetailes->product_id)->get();
+        if (($sale->sum('quantity') > $new_product->quantity) || $new_product->quantity == 0) {
+            $new_product->quantity = $product->quantity - $purchasedetailes->quantity + $sale->sum('quantity');
+            Sale::where('product_id', $purchasedetailes->product_id)->delete();
+        }
         $new_product->save();
         PurchaseDetailes::where('purchase_id', $id)->delete();
         Debt::where('purchase_id', $id)->delete();
         Purchase::find($id)->delete();
-        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2){
+        if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2) {
             return redirect('getPurchasesForEmployee')->with(['success' => 'تم الحذف بنجاح']);
-        }else{
+        } else {
             return redirect('purchase')->with(['success' => 'تم الحذف بنجاح']);
         }
     }
 
-    public function total()
+    public
+    function total()
     {
         $wallets = Wallet::where('company_id', Auth::user()->company_id);
         $expenses = Expense::where('company_id', Auth::user()->company_id);
         $purchase = Purchase::where('company_id', Auth::user()->company_id);
+//        $debts = Debt::where('company_id', Auth::user()->company_id)->where('due', '<>', 0)->get();
+//        $sum_paid = $debts->sum('paid');
+//        if (count($debts)>0){
+//            $total = $wallets->sum('income') - $expenses->sum('price') - $sum_paid;
+//        }
         $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
         return $total;
     }
 
-    public function getPurchasesForEmployee(){
+    public
+    function getPurchasesForEmployee()
+    {
         $purchases = Purchase::where('user_id', Auth::user()->id)->with('purchasedetailes')->get();
         $users = User::where('company_id', Auth::user()->company_id)->get();
         $products = Product::where('company_id', Auth::user()->company_id)->get();
