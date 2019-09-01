@@ -176,7 +176,7 @@ class UserController extends Controller
     public function updatePasswordFromCompanyAdmin(Request $request, $id)
     {
         $employee = User::find($id);
-        $request['password'] = Hash::make($request['password']);
+        $employee->password = Hash::make($request['password']);
         $employee->save();
         return redirect('employees');
     }

@@ -29,8 +29,11 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('user/{id}/editVendorFromCompanyAdmin', 'UserController@editVendorFromCompanyAdmin')->name('user.editVendorFromCompanyAdmin');
         Route::put('user/{id}/updateVendorFromCompanyAdmin', 'UserController@updateVendorFromCompanyAdmin')->name('user.updateVendorFromCompanyAdmin');
         Route::resource('user', 'UserController');
+
         Route::get('user/{id}/editPasswordFromCompanyAdmin', 'UserController@editPasswordFromCompanyAdmin')->name('user.editPasswordFromCompanyAdmin');
+
         Route::put('user/{id}/updatePasswordFromCompanyAdmin', 'UserController@updatePasswordFromCompanyAdmin')->name('user.updatePasswordFromCompanyAdmin');
+
         Route::get('employees', 'UserController@employees')->name('user.employees');
         Route::get('getEmployees', 'UserController@getEmployees')->name('user.getEmployees');
         Route::get('vendors', 'UserController@vendors')->name('user.vendors');

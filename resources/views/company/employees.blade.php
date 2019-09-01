@@ -58,6 +58,8 @@
                                 <td>
                                     <a href="{{ route('user.edit', $employee->id) }}" class="btn btn-primary"
                                        role="button">@lang('company.edit')</a>
+                                    <a href="{{ route('user.editPasswordFromCompanyAdmin', $employee->id) }}" class="btn btn-primary"
+                                       role="button">تغيير كلمة المرور</a>
                                     <form action="{{ route('user.destroy',$employee->id) }}" method="post"
                                           style="display: inline">
                                         @csrf
