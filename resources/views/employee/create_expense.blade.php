@@ -34,7 +34,13 @@
         <h1 class="h3 mb-3 font-weight-normal">الرجاء إدخال البيانات</h1>
 
         <input type="text" class="form-control" name="name" placeholder="الاسم" required>
+        @error('name')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <input type="text" class="form-control" name="price" placeholder="المبلغ" required>
+        @error('price')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
 
         <div class="card-footer text-right">
             <button type="submit" class="btn btn-primary">إضافة</button>

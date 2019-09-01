@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WalletRequest;
 use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class WalletController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(WalletRequest $request)
     {
         $request['user_id'] = Auth::user()->id;
         $request['company_id'] = Auth::user()->company_id;
@@ -75,7 +76,7 @@ class WalletController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(WalletRequest $request, $id)
     {
         $wallet = Wallet::find($id);
         $wallet->type = $request->input('type');

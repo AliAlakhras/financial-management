@@ -36,14 +36,20 @@
 @endsection
 @section('content')
     <div class="col-md-8">
-        <form class="form-signin" action="" method="post">
+        <form class="form-signin" action="{{ route('user.update', $employee->id) }}" method="post">
             @csrf
             {{ method_field('put') }}
             <h1 class="h3 mb-3 font-weight-normal">الرجاء تعديل بيانات الموظف</h1>
             <input type="text" class="form-control" name="name" value="{{ $employee->name }}"
                    placeholder="@lang('auth.name')" required autofocus>
+            @error('name')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <input type="email" class="form-control" name="email" value="{{ $employee->email }}"
                    placeholder="@lang('auth.email')" required>
+            @error('email')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <select class="form-control" name="company_role_id" value="{{ $employee->company_role_id }}" required>
                 <option value="-1">اختر نوع الموظف</option>
                 @foreach($roles_company as $role)
@@ -58,6 +64,9 @@
                     @endif
                 @endforeach
             </select>
+            @error('company_role_id')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="card-footer text-right">
                 <button type="submit" class="btn btn-primary">@lang('auth.register')</button>
             </div>

@@ -40,7 +40,13 @@
             @csrf
             {{ method_field('put') }}
             <input type="password" class="form-control" name="password" placeholder="كلمة المرور الجديدة" required>
+            @error('password')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <input type="password" class="form-control" name="password_confirmation" placeholder="تأكيد كلمة المرور الجديدة" required>
+            @error('password_confirmation')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="card-footer text-right">
                 <button type="submit" class="btn btn-primary">تعديل كلمة المرور</button>
             </div>

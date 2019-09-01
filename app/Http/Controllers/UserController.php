@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\CompanyRole;
 use App\Expense;
+use App\Http\Requests\StoreUserCompanyRequest;
+use App\Http\Requests\StoreVendorCompanyRequest;
+use App\Http\Requests\UpdateCompanyUserRequest;
+use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Requests\UpdateVendorCompanyRequest;
 use App\Purchase;
 use App\User;
 use App\Wallet;
@@ -42,7 +47,7 @@ class UserController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserCompanyRequest $request)
     {
         $request['company_id'] = Auth::user()->company_id;
         $request['role_id'] = 2;
@@ -82,7 +87,7 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCompanyUserRequest $request, $id)
     {
         $employee = User::find($id);
         $employee->name = $request->input('name');
@@ -126,7 +131,7 @@ class UserController extends Controller
         return view('admin.create_user', compact('roles_company', 'company'));
     }
 
-    public function storeUserFromAdminToCompany(Request $request, $id)
+    public function storeUserFromAdminToCompany(StoreUserCompanyRequest $request, $id)
     {
         $request['company_id'] = $id;
         $request['role_id'] = 2;
@@ -140,7 +145,7 @@ class UserController extends Controller
         return view('company.create_vendor');
     }
 
-    public function storeVendorFromCompanyAdmin(Request $request)
+    public function storeVendorFromCompanyAdmin(StoreVendorCompanyRequest $request)
     {
         $request['company_id'] = Auth::user()->company_id;
         $request['role_id'] = 3;
@@ -155,7 +160,7 @@ class UserController extends Controller
         return view('company.edit_vendor', compact('employee'));
     }
 
-    public function updateVendorFromCompanyAdmin(Request $request, $id)
+    public function updateVendorFromCompanyAdmin(UpdateVendorCompanyRequest $request, $id)
     {
         $employee = User::find($id);
         $employee->name = $request->input('name');
@@ -173,7 +178,7 @@ class UserController extends Controller
 
     }
 
-    public function updatePasswordFromCompanyAdmin(Request $request, $id)
+    public function updatePasswordFromCompanyAdmin(UpdatePasswordRequest $request, $id)
     {
         $employee = User::find($id);
         $employee->password = Hash::make($request['password']);

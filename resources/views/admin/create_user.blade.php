@@ -18,7 +18,13 @@
             <h1 class="h3 mb-3 font-weight-normal">الرجاء إدخال بيانات الشركة</h1>
 
             <input type="text" class="form-control" name="name" placeholder="@lang('auth.name')" required autofocus>
+            @error('name')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <input type="email" class="form-control" name="email" placeholder="@lang('auth.email')" required>
+            @error('email')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <select class="form-control" name="company_role_id" required>
                 <option value="-1">@lang('auth.choose')</option>
                 @foreach($roles_company as $role)
@@ -31,8 +37,18 @@
                     </option>
                 @endforeach
             </select>
+            @error('company_role_id')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <input type="password" class="form-control" name="password" placeholder="@lang('auth.password')" required>
+            @error('password')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <input type="password" class="form-control" name="password_confirmation" placeholder="@lang('auth.confirm password')" required>
+            @error('password_confirmation')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+
             <div class="card-footer text-right">
                 <button type="submit" class="btn btn-primary">@lang('auth.register')</button>
             </div>

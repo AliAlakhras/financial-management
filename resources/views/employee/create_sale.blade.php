@@ -39,8 +39,17 @@
                 </option>
             @endforeach
         </select>
+        @error('product_id')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <input type="number" class="form-control" name="quantity" placeholder="الكمية" required>
+        @error('quantity')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <input type="number" class="form-control" name="cost" placeholder="التكلفة" required>
+        @error('cost')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <div class="card-footer text-right">
             <button type="submit" class="btn btn-primary">إضافة</button>
         </div>

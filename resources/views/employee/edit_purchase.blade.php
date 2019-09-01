@@ -46,10 +46,19 @@
                     @endif
                 @endforeach
             </select>
+            @error('product_id')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <input type="number" class="form-control" value="{{ $purchasedetailes->quantity }}" name="quantity"
                    placeholder="الكمية" required>
+            @error('quantity')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <input type="number" class="form-control" value="{{ $purchasedetailes->cost }}" name="cost"
                    placeholder="التكلفة" required>
+            @error('cost')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <select class="form-control" name="vendor_id" required>
                 <option value="-1">اختر اسم المورد</option>
                 @foreach($vendors as $vendor)
@@ -64,6 +73,9 @@
                     @endif
                 @endforeach
             </select>
+            @error('vendor_id')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="card-footer text-right">
                 <button type="submit" class="btn btn-primary">تعديل</button>
             </div>

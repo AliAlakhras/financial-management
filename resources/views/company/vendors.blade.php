@@ -55,7 +55,7 @@
                                 <td>{{ $vendor->name  }}</td>
                                 <td>{{ $vendor->email  }}</td>
                                 <td>
-                                    <a href="{{ route('user.edit', $vendor->id) }}" class="btn btn-primary"
+                                    <a href="{{ route('user.editVendorFromCompanyAdmin', $vendor->id) }}" class="btn btn-primary"
                                        role="button">@lang('company.edit')</a>
                                     <form action="{{ route('user.destroy',$vendor->id) }}" method="post"
                                           style="display: inline">

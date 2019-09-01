@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Expense;
+use App\Http\Requests\ExpenseRequest;
 use App\Purchase;
 use App\User;
 use App\Wallet;
@@ -50,7 +51,7 @@ class ExpenseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ExpenseRequest $request)
     {
         if($request['price'] <= $this->total()){
             $request['user_id'] = Auth::user()->id;
@@ -106,7 +107,7 @@ class ExpenseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ExpenseRequest $request, $id)
     {
         $expense = Expense::find($id);
         if ($request['price'] <= $this->total()){

@@ -33,6 +33,9 @@
             {{ method_field('put') }}
             <h1 class="h3 mb-3 font-weight-normal">الرجاء إدخال البيانات</h1>
             <input type="number" class="form-control" name="paid" value="{{ $dept->paid }}" placeholder="المبلغ المراد دفعه" required>
+            @error('paid')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="card-footer text-right">
                 <button type="submit" class="btn btn-primary">تعديل</button>
             </div>

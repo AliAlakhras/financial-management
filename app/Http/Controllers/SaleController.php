@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaleRequest;
 use App\Product;
 use App\PurchaseDetailes;
 use App\Sale;
@@ -53,7 +54,7 @@ class SaleController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaleRequest $request)
     {
         $product = Product::find($request['product_id']);
         if ($request['quantity'] <= $product->quantity) {
@@ -120,7 +121,7 @@ class SaleController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SaleRequest $request, $id)
     {
         $product = Product::find($request->input('product_id'));
         if ($request['quantity'] <= $product->quantity) {

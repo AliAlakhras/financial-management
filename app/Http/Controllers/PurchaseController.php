@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Debt;
 use App\Expense;
+use App\Http\Requests\StorePurchaseRequest;
+use App\Http\Requests\UpdatePurchaseRequest;
 use App\Product;
 use App\Purchase;
 use App\PurchaseDetailes;
@@ -58,7 +60,7 @@ class PurchaseController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePurchaseRequest $request)
     {
         if (($request['quantity'] * $request['cost']) <= $this->total()) {
             $request['user_id'] = Auth::user()->id;
@@ -132,7 +134,7 @@ class PurchaseController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePurchaseRequest $request, $id)
     {
         $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->select('id', 'product_id', 'quantity', 'cost')->first();
         $purchase = Purchase::find($id);

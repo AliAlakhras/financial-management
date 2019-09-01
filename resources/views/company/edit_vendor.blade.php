@@ -2,7 +2,7 @@
 
 @section('title','صفحة الشركة')
 
-@section('title_content','تعديل موظف')
+@section('title_content','تعديل مورد')
 @section('sidebar')
     <ul class="nav" id="side-menu">
         <li>
@@ -36,14 +36,23 @@
 @endsection
 @section('content')
     <div class="col-md-8">
-        <form class="form-signin" action="{{ route('user.updateVendorFromCompanyAdmin' , $employee->id) }}" method="post">
+        <form class="form-signin" action="{{ route('user.updateVendorFromCompanyAdmin' , $employee->id) }}"
+              method="post">
             @csrf
             {{ method_field('put') }}
-            <h1 class="h3 mb-3 font-weight-normal">الرجاء تعديل بيانات الموظف</h1>
-            <input type="text" class="form-control" name="name" value="{{ $employee->name }}" placeholder="@lang('auth.name')" required autofocus>
-            <input type="email" class="form-control" name="emailclass="btn btn-primary""  value="{{ $employee->email }}" placeholder="@lang('auth.email')" required>
+            <h1 class="h3 mb-3 font-weight-normal">الرجاء تعديل بيانات المورد</h1>
+            <input type="text" class="form-control" name="name" value="{{ $employee->name }}"
+                   placeholder="@lang('auth.name')" required autofocus>
+            @error('name')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            <input type="email" class="form-control" name="email" class="btn btn-primary" value="{{ $employee->email }}"
+                   placeholder="@lang('auth.email')" required>
+            @error('email')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="card-footer text-right">
-                <button type="submit" class="btn btn-primary"> تعديل بيانات المورد </button>
+                <button type="submit" class="btn btn-primary"> تعديل بيانات المورد</button>
             </div>
         </form>
     </div>

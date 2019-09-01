@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Debt;
+use App\Http\Requests\UpdateDebtRequest;
 use App\Purchase;
 use App\User;
 use Illuminate\Http\Request;
@@ -84,7 +85,7 @@ class DebtController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDebtRequest $request, $id)
     {
         $debt = Debt::find($id);
         $total = $debt->paid + $debt->due ;

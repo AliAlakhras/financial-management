@@ -20,11 +20,25 @@
             <h1 class="h3 mb-3 font-weight-normal">الرجاء إدخال بيانات الشركة</h1>
 
             <input type="text" class="form-control" name="name" placeholder="@lang('company.name')" value="{{ $company->name }}" required autofocus>
+            @error('name')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <input type="text" class="form-control" name="type" placeholder="@lang('company.type')" value="{{ $company->type }}" required>
+            @error('type')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <input type="text" class="form-control" name="address" placeholder="@lang('company.address')"  value="{{ $company->address }}" required>
+            @error('address')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <input type="text" class="form-control" name="phone" placeholder="@lang('company.phone')"  value="{{ $company->phone }}" required>
+            @error('phone')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <input type="email" class="form-control" name="email" placeholder="@lang('company.email')"  value="{{ $company->email }}" required>
-
+            @error('email')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="card-footer text-right">
                 <button type="submit" class="btn btn-primary">@lang('company.edit')</button>
             </div>

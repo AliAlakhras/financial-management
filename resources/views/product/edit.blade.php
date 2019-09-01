@@ -42,7 +42,9 @@
         <h1 class="h3 mb-3 font-weight-normal">الرجاء تعديل البيانات</h1>
 
         <input type="text" class="form-control" name="name" value="{{ $product->name }}" placeholder="الاسم" required>
-
+        @error('name')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <div class="card-footer text-right">
             <button type="submit" class="btn btn-primary">تعديل</button>
         </div>

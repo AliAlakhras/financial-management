@@ -43,7 +43,13 @@
         <h1 class="h3 mb-3 font-weight-normal">الرجاء تعديل البيانات</h1>
 
         <input type="text" class="form-control" name="type" value="{{ $wallet->type }}" placeholder="النوع" required>
+        @error('type')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <input type="text" class="form-control" name="income" value="{{ $wallet->income }}" placeholder="المبلغ" required>
+        @error('income')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
 
         <div class="card-footer text-right">
             <button type="submit" class="btn btn-primary">تعديل</button>
