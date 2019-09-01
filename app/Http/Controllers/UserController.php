@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\CompanyRole;
+use App\Debt;
 use App\Expense;
 use App\Http\Requests\StoreUserCompanyRequest;
 use App\Http\Requests\StoreVendorCompanyRequest;
 use App\Http\Requests\UpdateCompanyUserRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateVendorCompanyRequest;
+use App\Product;
 use App\Purchase;
+use App\PurchaseDetailes;
+use App\Sale;
 use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
@@ -64,7 +68,15 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        $users = User::where('company_id', Auth::user()->company_id)->get();
+        $role_company = CompanyRole::where('id', $user->company_role_id)->get();
+        $expenses = Expense::where('user_id', $id)->get();
+        $purchases = Purchase::where('user_id', $id)->with('purchasedetailes')->get();
+        $products = Product::where('company_id', Auth::user()->company_id)->get();
+        $sales = Sale::where('user_id', $id)->get();
+        $purchases_debts = Purchase::where('user_id', $id)->with('debts')->get();
+        return view('company.user_details', compact('user', 'users', 'role_company', 'expenses', 'purchases', 'products', 'sales', 'purchases_debts'));
     }
 
     /**

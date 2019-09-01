@@ -55,9 +55,11 @@
                                 <th scope="row" style="text-align: center;">{{ $employee->id }}</th>
                                 <td>{{ $employee->name  }}</td>
                                 <td>{{ $employee->email  }}</td>
-                                <td>
+                                <td align="center">
                                     <a href="{{ route('user.edit', $employee->id) }}" class="btn btn-primary"
                                        role="button">@lang('company.edit')</a>
+                                    <a href="{{ route('user.show', $employee->id) }}" class="btn btn-primary"
+                                       role="button">عرض التفاصيل</a>
                                     <a href="{{ route('user.editPasswordFromCompanyAdmin', $employee->id) }}" class="btn btn-primary"
                                        role="button">تغيير كلمة المرور</a>
                                     <form action="{{ route('user.destroy',$employee->id) }}" method="post"
