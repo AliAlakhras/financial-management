@@ -56,17 +56,17 @@
                                 <td>{{ $employee->name  }}</td>
                                 <td>{{ $employee->email  }}</td>
                                 <td align="center">
-                                    <a href="{{ route('user.edit', $employee->id) }}" class="btn btn-primary"
+                                    <a href="{{ route('user.edit', $employee->id) }}" class="btn btn-primary btn-sm"
                                        role="button">@lang('company.edit')</a>
-                                    <a href="{{ route('user.show', $employee->id) }}" class="btn btn-primary"
+                                    <a href="{{ route('user.show', $employee->id) }}" class="btn btn-primary btn-sm"
                                        role="button">عرض التفاصيل</a>
-                                    <a href="{{ route('user.editPasswordFromCompanyAdmin', $employee->id) }}" class="btn btn-primary"
+                                    <a href="{{ route('user.editPasswordFromCompanyAdmin', $employee->id) }}" class="btn btn-primary btn-sm"
                                        role="button">تغيير كلمة المرور</a>
                                     <form action="{{ route('user.destroy',$employee->id) }}" method="post"
                                           style="display: inline">
                                         @csrf
                                         {{ method_field('delete') }}
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn btn-danger btn-sm" type="submit">
                                             @lang('company.delete')
                                         </button>
                                     </form>

@@ -82,13 +82,13 @@
                                 @endforeach
                                 <td>{{ $sale->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('sale.edit', $sale->id) }}" class="btn btn-primary"
+                                    <a href="{{ route('sale.edit', $sale->id) }}" class="btn btn-primary btn-sm"
                                        role="button">@lang('company.edit')</a>
                                     <form action="{{ route('sale.destroy', $sale->id) }}" method="post"
                                           style="display: inline">
                                         @csrf
                                         {{ method_field('delete') }}
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn btn-danger btn-sm" type="submit">
                                             @lang('company.delete')
                                         </button>
                                     </form>

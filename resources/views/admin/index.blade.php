@@ -29,23 +29,24 @@
                     @if($companies)
                         @foreach($companies as $company)
                             <tr>
-
                                 <th scope="row" style="text-align: center;">{{ $company->id }}</th>
                                 <td>{{ $company->name  }}</td>
                                 <td>{{ $company->type  }}</td>
                                 <td>{{ $company->address  }}</td>
                                 <td>{{ $company->phone  }}</td>
                                 <td>{{ $company->email  }}</td>
-                                <td>
-                                    <a href="{{ route('company.edit', $company->id) }}" class="btn btn-primary"
+                                <td align="center">
+                                    <a href="{{ route('company.edit', $company->id) }}" class="btn btn-primary btn-sm"
                                        role="button">@lang('company.edit')</a>
+                                    <a href="{{ route('company.show', $company->id) }}" class="btn btn-primary btn-sm"
+                                       role="button">عرض التفاصيل</a>
                                     <a href="{{ route('user.createUserFromAdminToCompany', $company->id)}}"
-                                       class="btn btn-primary" role="button">إضافة مسؤول</a>
+                                       class="btn btn-primary btn-sm" role="button">إضافة مسؤول</a>
                                     <form action="{{ route('company.destroy',$company->id) }}" method="post"
                                           style="display: inline">
                                         @csrf
                                         {{ method_field('delete') }}
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn btn-danger btn-sm" type="submit">
                                             @lang('company.delete')
                                         </button>
                                     </form>

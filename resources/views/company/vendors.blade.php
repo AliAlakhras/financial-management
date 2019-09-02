@@ -55,13 +55,13 @@
                                 <td>{{ $vendor->name  }}</td>
                                 <td>{{ $vendor->email  }}</td>
                                 <td>
-                                    <a href="{{ route('user.editVendorFromCompanyAdmin', $vendor->id) }}" class="btn btn-primary"
+                                    <a href="{{ route('user.editVendorFromCompanyAdmin', $vendor->id) }}" class="btn btn-primary btn-sm"
                                        role="button">@lang('company.edit')</a>
                                     <form action="{{ route('user.destroy',$vendor->id) }}" method="post"
                                           style="display: inline">
                                         @csrf
                                         {{ method_field('delete') }}
-                                        <button class="btn btn-danger" type="submit">
+                                        <button class="btn btn-danger btn-sm" type="submit">
                                             @lang('company.delete')
                                         </button>
                                     </form>
