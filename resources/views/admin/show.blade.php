@@ -7,6 +7,9 @@
         <li>
             <a href="{{ route('company.index') }}"><i class="fa fa-dashboard fa-fw"></i> الشركات</a>
         </li>
+        <li>
+            <a href="{{ route('company.index') }}"><i class="fa fa-dashboard fa-fw"></i> الشركات</a>
+        </li>
     </ul>
 @endsection
 @section('content')
