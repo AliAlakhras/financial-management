@@ -111,20 +111,15 @@ class PurchaseController extends Controller
      */
     public function edit($id)
     {
+        $purchase = Purchase::find($id);
+        $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->first();
+        $products = Product::where('company_id', Auth::user()->company_id)->get();
+        $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
         if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1) {
-            $purchase = Purchase::find($id);
-            $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->first();
-            $products = Product::where('company_id', Auth::user()->company_id)->get();
-            $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
             return view('purchase.edit', compact('purchase', 'purchasedetailes', 'products', 'vendors'));
         } else {
-            $purchase = Purchase::find($id);
-            $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->first();
-            $products = Product::where('company_id', Auth::user()->company_id)->get();
-            $vendors = User::where('role_id', 3)->where('company_id', Auth::user()->company_id)->get();
             return view('employee.edit_purchase', compact('purchase', 'purchasedetailes', 'products', 'vendors'));
         }
-
     }
 
     /**
@@ -138,7 +133,9 @@ class PurchaseController extends Controller
     {
         $purchasedetailes = PurchaseDetailes::where('purchase_id', $id)->select('id', 'product_id', 'quantity', 'cost')->first();
         $purchase = Purchase::find($id);
-        if (($request->input('quantity') < $purchasedetailes->quantity) || (($request->input('quantity') > $purchasedetailes->quantity) && ($this->total() >= (($request->input('quantity') - $purchasedetailes->quantity) * $request->input('cost'))))) {
+        if (($request->input('quantity') <= $purchasedetailes->quantity)
+            || (($request->input('quantity') > $purchasedetailes->quantity)
+                && ($this->total() >= (($request->input('quantity') - $purchasedetailes->quantity) * $request->input('cost'))))) {
             $purchase->total = $request->input('quantity') * $request->input('cost');
             $purchase->user_id = Auth::user()->id;
             $purchase->vendor_id = $request->input('vendor_id');
@@ -151,31 +148,9 @@ class PurchaseController extends Controller
             $purchasedetailesDone->save();
 
             if ($request->input('product_id') == $purchasedetailes->product_id) {
-                $new_product = Product::find($purchasedetailesDone->product_id);
-                $quantity = PurchaseDetailes::where('product_id', $purchasedetailesDone->product_id)->get('quantity');
-                $new_product->quantity = $quantity->sum('quantity');
-                $new_product->cost = $purchasedetailesDone->cost;
-                $new_product->total = $purchasedetailesDone->quantity * $purchasedetailesDone->cost;
-                if ($new_product->quantity == 0) {
-                    $new_product->cost = 0;
-                }
-                $new_product->save();
-            } elseif ($request->input('product_id') != $purchasedetailes->product_id) {
-                $new_product = Product::find($purchasedetailesDone->product_id);
-                $quantity = PurchaseDetailes::where('product_id', $purchasedetailesDone->product_id)->get('quantity');
-                $new_product->quantity = $quantity->sum('quantity');
-                $new_product->cost = $purchasedetailesDone->cost;
-                $new_product->total = $purchasedetailesDone->quantity * $purchasedetailesDone->cost;
-                $old_product = Product::find($purchasedetailes->product_id);
-                $oldquantity = PurchaseDetailes::where('product_id', $purchasedetailes->product_id)->get('quantity');
-                $old_product->quantity = $oldquantity->sum('quantity');
-                $old_product->cost = $purchasedetailesDone->cost;
-                $old_product->total = $old_product->quantity * $old_product->cost;
-                if ($new_product->quantity == 0 && $old_product->quantity == 0) {
-                    $new_product->cost = 0;
-                }
-                $new_product->save();
-                $old_product->save();
+                $this->updatePurchaseProductEqualProduct($purchasedetailesDone);
+            } else {
+                $this->updatePurchaseProductNotEqualProduct($purchasedetailesDone, $purchasedetailes);
             }
             if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2) {
                 return redirect('getPurchasesForEmployee')->with(['success' => 'تم التعديل بنجاح']);
@@ -214,8 +189,6 @@ class PurchaseController extends Controller
             Sale::where('product_id', $purchasedetailes->product_id)->delete();
         }
         $new_product->save();
-        PurchaseDetailes::where('purchase_id', $id)->delete();
-        Debt::where('purchase_id', $id)->delete();
         Purchase::find($id)->delete();
         if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2) {
             return redirect('getPurchasesForEmployee')->with(['success' => 'تم الحذف بنجاح']);
@@ -247,6 +220,37 @@ class PurchaseController extends Controller
         $products = Product::where('company_id', Auth::user()->company_id)->get();
         $total_purchases = $purchases->sum('total');
         return view('employee.get_purchases', compact('purchases', 'users', 'total_purchases', 'products'));
+    }
+
+    function updatePurchaseProductEqualProduct($purchasedetailesDone){
+        $product = Product::find($purchasedetailesDone->product_id);
+        $quantity = PurchaseDetailes::where('product_id', $purchasedetailesDone->product_id)->get('quantity');
+        $product->quantity = $quantity->sum('quantity');
+        $product->cost = $purchasedetailesDone->cost;
+        $product->total = $purchasedetailesDone->quantity * $purchasedetailesDone->cost;
+        if ($product->quantity == 0) {
+            $product->cost = 0;
+        }
+        $product->save();
+    }
+
+    function updatePurchaseProductNotEqualProduct($purchasedetailesDone, $purchasedetailes){
+        $new_product = Product::find($purchasedetailesDone->product_id);
+        $quantity = PurchaseDetailes::where('product_id', $purchasedetailesDone->product_id)->get('quantity');
+        $new_product->quantity = $quantity->sum('quantity');
+        $new_product->cost = $purchasedetailesDone->cost;
+        $new_product->total = $purchasedetailesDone->quantity * $purchasedetailesDone->cost;
+        $old_product = Product::find($purchasedetailes->product_id);
+        $oldquantity = PurchaseDetailes::where('product_id', $purchasedetailes->product_id)->get('quantity');
+        $old_product->quantity = $oldquantity->sum('quantity');
+        $old_product->cost = $purchasedetailesDone->cost;
+        $old_product->total = $old_product->quantity * $old_product->cost;
+        if ($new_product->quantity == 0 && $old_product->quantity == 0) {
+            $new_product->cost = 0;
+            $old_product->cost = 0;
+        }
+        $new_product->save();
+        $old_product->save();
     }
 
 }

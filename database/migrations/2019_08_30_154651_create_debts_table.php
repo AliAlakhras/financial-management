@@ -19,7 +19,7 @@ class CreateDebtsTable extends Migration
             $table->float('paid');
             $table->float('due');
 
-            $table->foreign('purchase_id')->references('id')->on('purchases');
+            $table->foreign('purchase_id')->references('id')->on('purchases')->onDelete('cascade');
             $table->timestamps();
         });
     }

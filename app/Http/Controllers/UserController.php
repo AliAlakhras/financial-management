@@ -107,7 +107,6 @@ class UserController extends Controller
         $employee->company_role_id = $request->input('company_role_id');
         $employee->save();
         return redirect('employees');
-
     }
 
     /**
@@ -118,6 +117,19 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $purchases = Purchase::where('user_id', $id)->get();
+        foreach ($purchases as $purchase) {
+            $purchasedetailes = PurchaseDetailes::where('purchase_id', $purchase->id)->select('product_id', 'quantity', 'cost')->first();
+            $product = Product::where('id', $purchasedetailes->product_id)->select('quantity', 'cost', 'total')->first();
+            $sales = Sale::where('product_id', $purchasedetailes->product_id)->get();
+            foreach ($sales as $sale){
+                $new_product = Product::find($purchasedetailes->product_id);
+                $new_product->quantity = $product->quantity - $purchasedetailes->quantity + $sale->quantity;
+                $new_product->cost = 0;
+                $new_product->total = 0;
+                $new_product->save();
+            }
+        }
         User::find($id)->delete();
         return redirect('user');
     }

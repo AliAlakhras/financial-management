@@ -15,7 +15,7 @@ class AlterUsersAddCompanyRoleId extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('company_role_id')->nullable();
-            $table->foreign('company_role_id')->references('id')->on('company_roles');
+            $table->foreign('company_role_id')->references('id')->on('company_roles')->onDelete('cascade');
         });
     }
 
