@@ -69,10 +69,8 @@ class PurchaseController extends Controller
             $purchase = Purchase::create($request->all());
             $request['purchase_id'] = $purchase->id;
             PurchaseDetailes::create($request->all());
-            if ($request['paid'] != $request['total']) {
-                $request['due'] = $request['total'] - $request['paid'];
-                Debt::create($request->all());
-            }
+            $request['due'] = $request['total'] - $request['paid'];
+            Debt::create($request->all());
             $addToProduct = Product::find($request['product_id']);
             $addToProduct->quantity = $request->input('quantity') + $addToProduct->quantity;
             $addToProduct->cost = $request->input('cost');
@@ -197,18 +195,13 @@ class PurchaseController extends Controller
         }
     }
 
-    public
-    function total()
+    public function total()
     {
         $wallets = Wallet::where('company_id', Auth::user()->company_id);
         $expenses = Expense::where('company_id', Auth::user()->company_id);
-        $purchase = Purchase::where('company_id', Auth::user()->company_id);
-//        $debts = Debt::where('company_id', Auth::user()->company_id)->where('due', '<>', 0)->get();
-//        $sum_paid = $debts->sum('paid');
-//        if (count($debts)>0){
-//            $total = $wallets->sum('income') - $expenses->sum('price') - $sum_paid;
-//        }
-        $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
+        $debts = Debt::where('company_id', Auth::user()->company_id)->get();
+
+        $total = $wallets->sum('income') - $expenses->sum('price') - $debts->sum('paid');
         return $total;
     }
 
@@ -222,7 +215,8 @@ class PurchaseController extends Controller
         return view('employee.get_purchases', compact('purchases', 'users', 'total_purchases', 'products'));
     }
 
-    function updatePurchaseProductEqualProduct($purchasedetailesDone){
+    function updatePurchaseProductEqualProduct($purchasedetailesDone)
+    {
         $product = Product::find($purchasedetailesDone->product_id);
         $quantity = PurchaseDetailes::where('product_id', $purchasedetailesDone->product_id)->get('quantity');
         $product->quantity = $quantity->sum('quantity');
@@ -234,7 +228,8 @@ class PurchaseController extends Controller
         $product->save();
     }
 
-    function updatePurchaseProductNotEqualProduct($purchasedetailesDone, $purchasedetailes){
+    function updatePurchaseProductNotEqualProduct($purchasedetailesDone, $purchasedetailes)
+    {
         $new_product = Product::find($purchasedetailesDone->product_id);
         $quantity = PurchaseDetailes::where('product_id', $purchasedetailesDone->product_id)->get('quantity');
         $new_product->quantity = $quantity->sum('quantity');

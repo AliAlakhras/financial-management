@@ -64,30 +64,32 @@
                     @if($purchases)
                         @foreach($purchases as $purchase)
                             @foreach($purchase->debts as $debt)
-                                <tr>
-                                    <th scope="row" style="text-align: center;">{{ $debt->id }}</th>
-                                    @foreach($users as $user)
-                                        @if($user->id == $purchase->vendor_id)
-                                            <td>{{ $user->name }}</td>
-                                        @endif
-                                    @endforeach
-                                    <td>{{ $debt->paid + $debt->due }}</td>
-                                    <td>{{ $debt->paid }}</td>
+                                @if($debt->due > 0)
+                                    <tr>
+                                        <th scope="row" style="text-align: center;">{{ $debt->id }}</th>
+                                        @foreach($users as $user)
+                                            @if($user->id == $purchase->vendor_id)
+                                                <td>{{ $user->name }}</td>
+                                            @endif
+                                        @endforeach
+                                        <td>{{ $debt->paid + $debt->due }}</td>
+                                        <td>{{ $debt->paid }}</td>
 
-                                    <td>{{ $debt->due }}</td>
-                                    <td>
-                                        <a href="{{ route('debt.edit', $debt->id) }}" class="btn btn-primary btn-sm"
-                                           role="button">@lang('company.edit')</a>
-                                        <form action="{{ route('debt.destroy', $debt->id) }}" method="post"
-                                              style="display: inline">
-                                            @csrf
-                                            {{ method_field('delete') }}
-                                            <button class="btn btn-danger btn-sm" type="submit">
-                                                @lang('company.delete')
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                        <td>{{ $debt->due }}</td>
+                                        <td>
+                                            <a href="{{ route('debt.edit', $debt->id) }}" class="btn btn-primary btn-sm"
+                                               role="button">@lang('company.edit')</a>
+                                            <form action="{{ route('debt.destroy', $debt->id) }}" method="post"
+                                                  style="display: inline">
+                                                @csrf
+                                                {{ method_field('delete') }}
+                                                <button class="btn btn-danger btn-sm" type="submit">
+                                                    @lang('company.delete')
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                         @endforeach
                     @else

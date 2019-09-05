@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Debt;
 use App\Expense;
 use App\Http\Requests\ExpenseRequest;
 use App\Purchase;
@@ -145,11 +146,13 @@ class ExpenseController extends Controller
         }
     }
 
-    public function total(){
+    public function total()
+    {
         $wallets = Wallet::where('company_id', Auth::user()->company_id);
         $expenses = Expense::where('company_id', Auth::user()->company_id);
-        $purchase = Purchase::where('company_id', Auth::user()->company_id);
-        $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
+        $debts = Debt::where('company_id', Auth::user()->company_id)->get();
+
+        $total = $wallets->sum('income') - $expenses->sum('price') - $debts->sum('paid');
         return $total;
     }
 

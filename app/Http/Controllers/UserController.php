@@ -226,8 +226,9 @@ class UserController extends Controller
     {
         $wallets = Wallet::where('company_id', Auth::user()->company_id);
         $expenses = Expense::where('company_id', Auth::user()->company_id);
-        $purchase = Purchase::where('company_id', Auth::user()->company_id);
-        $total = $wallets->sum('income') - $expenses->sum('price') - $purchase->sum('total');
+        $debts = Debt::where('company_id', Auth::user()->company_id);
+
+        $total = $wallets->sum('income') - $expenses->sum('price') - $debts->sum('paid');
         return $total;
     }
 
