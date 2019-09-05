@@ -9,14 +9,38 @@
         <li>
             <a href="{{ route('user.employeePage') }}"><i class="fa fa-dashboard fa-fw"></i> صفحة المستخدم</a>
         </li>
-        <li>
-            <a href="{{ route('expense.getExpensesForEmployee') }}"><i class="fa fa-dashboard fa-fw"></i> المصروفات</a>
+        <li class="">
+            <a href="#"><i class="fa fa-files-o fa-fw"></i> المصروفات<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+                <li>
+                    <a href="{{ route('expense.getExpensesForEmployee') }}">عرض المصروفات</a>
+                </li>
+                <li>
+                    <a href="{{ route('expense.create') }}">إضافة مصروف</a>
+                </li>
+            </ul>
         </li>
-        <li>
-            <a href="{{ route('purchase.getPurchasesForEmployee') }}"><i class="fa fa-dashboard fa-fw"></i> عمليات الشراء</a>
+        <li class="">
+            <a href="#"><i class="fa fa-files-o fa-fw"></i>عمليات الشراء<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+                <li>
+                    <a href="{{ route('purchase.getPurchasesForEmployee') }}">عرض المشتريات</a>
+                </li>
+                <li>
+                    <a href="{{ route('purchase.create') }}">إضافة عملية شراء</a>
+                </li>
+            </ul>
         </li>
-        <li>
-            <a href="{{ route('sale.getSalesForEmployee') }}"><i class="fa fa-dashboard fa-fw"></i> عمليات البيع</a>
+        <li class="">
+            <a href="#"><i class="fa fa-files-o fa-fw"></i>عمليات البيع<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+                <li>
+                    <a href="{{ route('sale.getSalesForEmployee') }}">عرض المبيعات</a>
+                </li>
+                <li>
+                    <a href="{{ route('sale.create') }}">إضافة عملية بيع</a>
+                </li>
+            </ul>
         </li>
         <li>
             <a href="{{ route('product.getProductsForEmployee') }}"><i class="fa fa-dashboard fa-fw"></i> المخزن</a>
@@ -31,15 +55,7 @@
     <div>
         <div style="float: right; width: 50%">
             <ul>
-                <li style="margin-bottom: 5px">
-                    <a href="{{ route('expense.create') }}" class="btn btn-primary" role="button">إضافة مصروفات</a>
-                </li>
-                <li style="margin-bottom: 5px">
-                    <a href="{{ route('purchase.create') }}" class="btn btn-primary" role="button">إضافة عملية شراء</a>
-                </li>
-                <li style="margin-bottom: 5px">
-                    <a href="{{ route('sale.create') }}" class="btn btn-primary" role="button">إضافة عملية بيع</a>
-                </li>
+
             </ul>
         </div>
 
