@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\ChartJs;
 use App\Company;
 use App\CompanyRole;
 use App\Debt;
@@ -18,6 +19,7 @@ use App\Sale;
 use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,8 +32,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $total = $this->total();
-        return view('company.index', compact('total'));
+        $walletChart = $this->walletChart();
+        $productChart = $this->productChart();
+
+        return view('company.index', compact('walletChart', 'productChart'));
     }
 
     /**
@@ -122,7 +126,7 @@ class UserController extends Controller
             $purchasedetailes = PurchaseDetailes::where('purchase_id', $purchase->id)->select('product_id', 'quantity', 'cost')->first();
             $product = Product::where('id', $purchasedetailes->product_id)->select('quantity', 'cost', 'total')->first();
             $sales = Sale::where('product_id', $purchasedetailes->product_id)->get();
-            foreach ($sales as $sale){
+            foreach ($sales as $sale) {
                 $new_product = Product::find($purchasedetailes->product_id);
                 $new_product->quantity = $product->quantity - $purchasedetailes->quantity + $sale->quantity;
                 $new_product->cost = 0;
@@ -237,4 +241,31 @@ class UserController extends Controller
         $total = $this->total();
         return view('employee.index', compact('total'));
     }
+
+    function walletChart()
+    {
+        $paid = Debt::where('company_id', Auth::user()->company_id)->sum('paid');
+        $expenses = Expense::where('company_id', Auth::user()->company_id)->sum('price');
+        $total = $this->total();
+        $chart = new ChartJs();
+        $chart->labels(['الباقي', 'المشتريات', 'المصروفات']);
+        $chart->dataset('المحفظة', 'doughnut', [$total, $paid, $expenses])->options([
+            'backgroundColor' => ['orange', 'red', 'yellow'],
+        ]);
+        $chart->title('المحفظة');
+        return $chart;
+    }
+
+    function productChart()
+    {
+        $products = Product::where('company_id', Auth::user()->company_id)->get()->toArray();
+        $chart = new ChartJs();
+        $chart->labels(Arr::pluck($products, 'name'));
+        $chart->dataset('My dataset', 'doughnut', Arr::pluck($products, 'quantity'))->options([
+            'backgroundColor' => ['red', 'blue', 'orange', 'yellow'],
+        ]);
+        $chart->title('المخزن');
+        return $chart;
+    }
+
 }

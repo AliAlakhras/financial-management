@@ -9,7 +9,7 @@
         <li>
             <a href="{{ route('user.index') }}"><i class="fa fa-dashboard fa-fw"></i> الشركة</a>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i> الموظفين<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -20,7 +20,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i> الموردين<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -31,7 +31,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i> المحفظة<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -42,7 +42,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i> المصروفات<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -53,7 +53,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i>عمليات البيع<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -64,7 +64,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i>عمليات الشراء<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -75,7 +75,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i>المخزن<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -93,15 +93,17 @@
 @endsection
 
 @section('content')
-    <div>
-        <div style="float: right; width: 50%">
-            <ul>
-            </ul>
-        </div>
-
-        <div style="float: left; width: 50%">
-            <h2> الرصيد المتبقي: {{ $total }} </h2>
-        </div>
-
+    <div style="width: 33.33%; height: 300px; float: right;">
+        {!! $walletChart->container() !!}
     </div>
+    <div style="width: 33.33%; height: 300px; float: right;">
+        {!! $productChart->container() !!}
+    </div>
+
+@endsection
+
+@section('jsFooter')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+    {!! $walletChart->script() !!}
+    {!! $productChart->script() !!}
 @endsection

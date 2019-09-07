@@ -95,7 +95,7 @@ class DebtController extends Controller
         if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 1){
             return redirect('debt')->with(['success' => 'تم التعديل بنجاح']);
         }else{
-            return redirect('getDebtsForEmployee')->with(['success' => 'تم الإضافة بنجاح']);
+            return redirect('getDebtsForEmployee')->with(['success' => 'تم التعديل بنجاح']);
         }
 
     }

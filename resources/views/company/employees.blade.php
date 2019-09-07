@@ -8,7 +8,7 @@
         <li>
             <a href="{{ route('user.index') }}"><i class="fa fa-dashboard fa-fw"></i> الشركة</a>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i> الموظفين<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -19,7 +19,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i> الموردين<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -30,7 +30,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i> المحفظة<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -41,7 +41,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i> المصروفات<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -52,7 +52,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i>عمليات البيع<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -63,7 +63,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i>عمليات الشراء<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>
@@ -74,7 +74,7 @@
                 </li>
             </ul>
         </li>
-        <li class="">
+        <li>
             <a href="#"><i class="fa fa-files-o fa-fw"></i>المخزن<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li>

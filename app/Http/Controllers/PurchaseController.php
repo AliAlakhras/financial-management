@@ -62,7 +62,7 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request)
     {
-        if (($request['quantity'] * $request['cost']) <= $this->total()) {
+        if ($request['paid'] <= $this->total()) {
             $request['user_id'] = Auth::user()->id;
             $request['company_id'] = Auth::user()->company_id;
             $request['total'] = $request['quantity'] * $request['cost'];
