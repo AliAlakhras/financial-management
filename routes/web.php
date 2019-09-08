@@ -12,8 +12,10 @@
 */
 
 
+
 Route::get('/', 'HomeController@index');
 Auth::routes();
+Route::get('sendEmail','PluginsController@sendEmail');
 
 Route::group(['middleware' => ['auth']], function() {
 
