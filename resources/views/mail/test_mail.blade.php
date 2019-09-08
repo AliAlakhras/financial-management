@@ -1,1 +1,1 @@
-test mail
+test mail {{ $user->name }}

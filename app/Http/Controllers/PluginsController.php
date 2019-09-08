@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Mail;
 class PluginsController extends Controller
 {
     function sendEmail(){
-        $email = Mail::to('ali.omar.alakhras@gmail.com')->send(new TestMail());
+        $user = User::first();
+        $email = Mail::to('ali.omar.alakhras@gmail.com')->send(new TestMail($user));
         dd($email);
     }
 }
