@@ -10,23 +10,7 @@
 
     <title>@yield('title','مصاريفي') - مصاريفي</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="{{ asset('template/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-
-    <!-- not use this in ltr -->
-    <!--<link href="{{ asset('template/css/bootstrap.rtl.css ') }}" rel="stylesheet" type="text/css">-->
-
-    <!-- MetisMenu CSS -->
-    <link href="{{ asset('template/css/plugins/metisMenu/metisMenu.min.css ') }}" rel="stylesheet" type="text/css">
-
-    <!-- Timeline CSS -->
-    <link href="{{ asset('template/css/plugins/timeline.css ') }}" rel="stylesheet" type="text/css">
-
-    <!-- Custom CSS -->
-    <link href="{{ asset('template/css/sb-admin-2.css ') }}" rel="stylesheet" type="text/css">
-
-    <!-- Morris Charts CSS -->
-    <link href="{{ asset('template/css/plugins/morris.css ') }}" rel="stylesheet" type="text/css">
+    <link href="{{ mix('css/style.css') }}" rel="stylesheet"/>
 
     <!-- Custom Fonts -->
     <link href="{{ asset('template/css/font-awesome/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
@@ -312,23 +296,7 @@
 </div>
 <!-- /#wrapper -->
 
-<!-- jQuery Version 1.11.0 -->
-<script src="{{ asset('template/js/jquery-1.11.0.js') }}"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="{{ asset('template/js/bootstrap.min.js') }}"></script>
-
-<!-- Metis Menu Plugin JavaScript -->
-<script src="{{ asset('template/js/metisMenu/metisMenu.min.js') }}"></script>
-
-<!-- Morris Charts JavaScript -->
-<script src="{{ asset('template/js/raphael/raphael.min.js') }}"></script>
-<script src="{{ asset('template/js/morris/morris.min.js') }}"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="{{ asset('template/js/sb-admin-2.js') }}"></script>
-<script src="{{ asset('template/js/jquery/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('template/js/bootstrap/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ mix('js/script.js') }}"> </script>
 
 @yield('jsFooter')
 
