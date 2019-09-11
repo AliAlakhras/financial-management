@@ -34,8 +34,12 @@ class UserController extends Controller
     {
         $walletChart = $this->walletChart();
         $productChart = $this->productChart();
+        $users = User::where('company_id', Auth::user()->company_id)->where('role_id', 2)->count();
+        $vendors = User::where('company_id', Auth::user()->company_id)->where('role_id', 3)->count();
+        $purchases = Purchase::where('company_id', Auth::user()->company_id)->count();
+        $sales = Sale::where('company_id', Auth::user()->company_id)->count();
 
-        return view('company.index', compact('walletChart', 'productChart'));
+        return view('company.index', compact('walletChart', 'productChart', 'users', 'vendors', 'purchases', 'sales'));
     }
 
     /**

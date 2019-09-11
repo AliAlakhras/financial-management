@@ -93,12 +93,105 @@
 @endsection
 
 @section('content')
-    <div style="width: 33.33%; height: 300px; float: right;">
-        {!! $walletChart->container() !!}
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-comments fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <div class="huge">{{ $users }}</div>
+                            <div>الموظفين</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('user.employees') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left"><i class="fa fa-arrow-circle-right"></i></span>
+                        <span class="pull-right">عرض</span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-tasks fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <div class="huge">{{ $vendors }}</div>
+                            <div>الموردين</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('user.vendors') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left"><i class="fa fa-arrow-circle-right"></i></span>
+                        <span class="pull-right">عرض</span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-shopping-cart fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <div class="huge">{{ $purchases }}</div>
+                            <div>عمليات الشراء</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('purchase.index') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left"><i class="fa fa-arrow-circle-right"></i></span>
+                        <span class="pull-right">عرض</span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-support fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <div class="huge">{{ $sales }}</div>
+                            <div>عمليات البيع</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('sale.index') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left"><i class="fa fa-arrow-circle-right"></i></span>
+                        <span class="pull-right">عرض</span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
-    <div style="width: 33.33%; height: 300px; float: right;">
-        {!! $productChart->container() !!}
+    <div align="center">
+        <div style="width: 33.33%; height: 300px; display: inline-block">
+            {!! $walletChart->container() !!}
+        </div>
+        <div style="width: 33.33%; height: 300px; display: inline-block">
+            {!! $productChart->container() !!}
+        </div>
     </div>
+
 
 @endsection
 
