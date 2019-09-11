@@ -98,7 +98,11 @@ class PurchaseController extends Controller
      */
     public function show($id)
     {
-        //
+        $purchases = Purchase::where('id', $id)->with('purchasedetailes')->get();
+        $users = User::where('company_id', Auth::user()->company_id)->get();
+        $products = Product::where('company_id', Auth::user()->company_id)->get();
+        $debt = Debt::where('purchase_id', $id)->first();
+        return view('purchase.show', compact('purchases','users', 'products', 'debt'));
     }
 
     /**

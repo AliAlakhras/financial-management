@@ -143,7 +143,8 @@
                     </table>
                 </div>
             </div>
-            <div class="panel-heading"><b>
+            <div class="panel-heading">
+                <b>
                     إجمالي المصروفات: {{ $expenses->sum('price') }}
                 </b>
             </div>
