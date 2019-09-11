@@ -6,6 +6,7 @@ use App\Debt;
 use App\Expense;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
+use App\Payment;
 use App\Product;
 use App\Purchase;
 use App\PurchaseDetailes;
@@ -69,6 +70,7 @@ class PurchaseController extends Controller
             $purchase = Purchase::create($request->all());
             $request['purchase_id'] = $purchase->id;
             PurchaseDetailes::create($request->all());
+            Payment::create($request->all());
             $request['due'] = $request['total'] - $request['paid'];
             Debt::create($request->all());
             $addToProduct = Product::find($request['product_id']);
@@ -191,6 +193,7 @@ class PurchaseController extends Controller
             Sale::where('product_id', $purchasedetailes->product_id)->delete();
         }
         $new_product->save();
+        Payment::where('purchase_id', $id)->delete();
         Purchase::find($id)->delete();
         if (Auth::user()->role_id == 2 && Auth::user()->company_role_id == 2) {
             return redirect('getPurchasesForEmployee')->with(['success' => 'تم الحذف بنجاح']);

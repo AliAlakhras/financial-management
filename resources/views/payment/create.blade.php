@@ -2,7 +2,7 @@
 
 @section('title','صفحة الشركة')
 
-@section('title_content','عرض التفاصيل')
+@section('title_content','الدفعات')
 
 @section('sidebar')
     <ul class="nav in" id="side-menu">
@@ -91,72 +91,20 @@
         </li>
     </ul>
 @endsection
+
 @section('content')
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading"> معلومات عملية الشراء</div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover">
-                        @foreach($purchases as $purchase)
-                            <tr>
-                                <th>اسم المنتج</th>
-                                @foreach($products as $product)
-                                    @foreach($purchase->purchasedetailes as $purch)
-                                        @if($product->id == $purch->product_id)
-                                            <td>{{ $product->name }}</td>
-                                        @endif
-                                    @endforeach
-                                @endforeach
-                            </tr>
-                            <tr>
-                                <th>الكمية</th>
-                                <td>{{ $purch->quantity }}</td>
-                            </tr>
-                            <tr>
-                                <th>التكلفة</th>
-                                <td>{{ $purch->cost }}</td>
-                            </tr>
-                        @endforeach
-                        <tr>
-                            <th>الإجمالي</th>
-                            <td>{{ $purchase->total }}</td>
-                        </tr>
-                        <tr>
-                            <th>تم دفعه</th>
-                            <td>{{ $debt->paid }}</td>
-                        </tr>
-                        <tr>
-                            <th>الباقي</th>
-                            <td>{{ $debt->due }}</td>
-                        </tr>
-                        <tr>
-                            <th>بواسطة</th>
-                            @foreach($users as $user)
-                                @if($user->id == $purchase->user_id)
-                                    <td>{{ $user->name  }}</td>
-                                @endif
-                            @endforeach
-                        </tr>
-                        <tr>
-                            <th>اسم المورد</th>
-                            @if($user->id == $purchase->vendor_id)
-                                <td>{{ $user->name  }}</td>
-                            @endif
-                        </tr>
-                        <tr>
-                            <th>بتاريخ</th>
-                            <td>{{ $purchase->created_at }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="panel-heading" align="center">
-                <a href="{{ route('payment.createPayment', $purchase->id) }}" class="btn btn-primary btn-sm"
-                   role="button">دفع دفعة</a>
-                <a href="" class="btn btn-primary btn-sm"
-                   role="button">طباعة فاتورة</a>
-            </div>
+    <div class="col-md-8">
+    <form class="form-signin" action="{{ route('payment.storePayment', $purchase) }}" method="post">
+        @csrf
+        <h1 class="h3 mb-3 font-weight-normal">الرجاء إدخال البيانات</h1>
+        <input type="text" class="form-control" name="paid" placeholder="المبلغ" required>
+        @error('price')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
+        <div class="card-footer text-right">
+            <button type="submit" class="btn btn-primary">إضافة</button>
         </div>
+    </form>
     </div>
 @endsection

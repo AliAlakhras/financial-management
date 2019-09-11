@@ -97,7 +97,6 @@ class DebtController extends Controller
         }else{
             return redirect('getDebtsForEmployee')->with(['success' => 'تم التعديل بنجاح']);
         }
-
     }
 
     /**

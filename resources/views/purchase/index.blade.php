@@ -150,10 +150,10 @@
                                 @endforeach
                                 <td>{{ $purchase->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('purchase.edit', $purchase->id) }}" class="btn btn-primary btn-sm"
-                                       role="button">@lang('company.edit')</a>
                                     <a href="{{ route('purchase.show', $purchase->id) }}" class="btn btn-primary btn-sm"
                                        role="button">عرض</a>
+                                    <a href="{{ route('purchase.edit', $purchase->id) }}" class="btn btn-primary btn-sm"
+                                       role="button">@lang('company.edit')</a>
                                     <form action="{{ route('purchase.destroy', $purchase->id) }}" method="post"
                                           style="display: inline">
                                         @csrf

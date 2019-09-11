@@ -48,6 +48,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('purchase', 'PurchaseController');
         Route::resource('sale', 'SaleController');
         Route::resource('debt', 'DebtController');
+        Route::resource('payment', 'PaymentController');
+        Route::get('payment/{id}/createPayment', 'PaymentController@createPayment')->name('payment.createPayment');
+        Route::post('payment/{id}/storePayment', 'PaymentController@storePayment')->name('payment.storePayment');
         Route::get('employeePage', 'UserController@employeePage')->name('user.employeePage');
         Route::get('getExpensesForEmployee','ExpenseController@getExpensesForEmployee')->name('expense.getExpensesForEmployee');
         Route::get('getPurchasesForEmployee','PurchaseController@getPurchasesForEmployee')->name('purchase.getPurchasesForEmployee');
